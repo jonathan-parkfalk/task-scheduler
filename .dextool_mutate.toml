@@ -30,7 +30,7 @@ prune = true
 # checksum the files in this directories and warn if a mutation status is older
 # than the newest file. The path can be a file or a directory. Directories
 # are traveresed. All paths are relative to root.
-# test_paths = ["test/suite1", "test/mytest.cpp"]
+test_paths = ["test"]
 
 # glob filter which include/exclude matched test files (relative to root) from analysis.
 # test_include = ["*/*.ext"]

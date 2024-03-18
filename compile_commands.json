@@ -1,0 +1,200 @@
+[
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/Assert.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Assert.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Assert.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/Assert.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/ConditionVariable.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/ConditionVariable.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/ConditionVariable.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/ConditionVariable.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/MultiConsumerQueueBase.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/MultiConsumerQueueBase.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/MultiConsumerQueueBase.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/MultiConsumerQueueBase.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/Mutex.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Mutex.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Mutex.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/Mutex.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/Signal.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Signal.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Signal.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/Signal.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/StringFunctions.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/StringFunctions.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/StringFunctions.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/StringFunctions.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/Thread.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Thread.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Thread.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/Thread.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/Util.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Util.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Util.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/Util.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/QPTimer_Posix.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/QPTimer_Posix.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/QPTimer_Posix.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/QPTimer_Posix.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/Thread_Posix.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Thread_Posix.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Thread_Posix.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/Thread_Posix.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/common",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgcommon.dir/Time_Posix.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Time_Posix.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/common/Time_Posix.cpp",
+  "output": "src/mg/common/CMakeFiles/mgcommon.dir/Time_Posix.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/serverbox",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgserverbox.dir/Task.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/serverbox/Task.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/serverbox/Task.cpp",
+  "output": "src/mg/serverbox/CMakeFiles/mgserverbox.dir/Task.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/serverbox",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgserverbox.dir/TaskScheduler.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/serverbox/TaskScheduler.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/serverbox/TaskScheduler.cpp",
+  "output": "src/mg/serverbox/CMakeFiles/mgserverbox.dir/TaskScheduler.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/src/mg/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/mgtest.dir/Random.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/test/Random.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/src/mg/test/Random.cpp",
+  "output": "src/mg/test/CMakeFiles/mgtest.dir/Random.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/main.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/main.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/main.cpp",
+  "output": "test/CMakeFiles/test.dir/main.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTest.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTest.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTest.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTest.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestAtomic.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestAtomic.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestAtomic.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestAtomic.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestBinaryHeap.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestBinaryHeap.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestBinaryHeap.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestBinaryHeap.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestConditionVariable.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestConditionVariable.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestConditionVariable.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestConditionVariable.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestForwardList.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestForwardList.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestForwardList.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestForwardList.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestMultiConsumerQueue.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestMultiConsumerQueue.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestMultiConsumerQueue.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestMultiConsumerQueue.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestMultiProducerQueue.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestMultiProducerQueue.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestMultiProducerQueue.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestMultiProducerQueue.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestMutex.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestMutex.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestMutex.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestMutex.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestSignal.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestSignal.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestSignal.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestSignal.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestTaskScheduler.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestTaskScheduler.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestTaskScheduler.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestTaskScheduler.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/test",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/test.dir/UnitTestUtil.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestUtil.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/test/UnitTestUtil.cpp",
+  "output": "test/CMakeFiles/test.dir/UnitTestUtil.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/bench",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/bench.dir/Bench.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/Bench.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/Bench.cpp",
+  "output": "bench/CMakeFiles/bench.dir/Bench.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/bench",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/bench_taskscheduler.dir/BenchTaskScheduler.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchTaskScheduler.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchTaskScheduler.cpp",
+  "output": "bench/CMakeFiles/bench_taskscheduler.dir/BenchTaskScheduler.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/bench",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/bench_taskscheduler_trivial.dir/BenchTaskSchedulerTrivial.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchTaskSchedulerTrivial.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchTaskSchedulerTrivial.cpp",
+  "output": "bench/CMakeFiles/bench_taskscheduler_trivial.dir/BenchTaskSchedulerTrivial.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/bench",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/bench_mcspqueue.dir/BenchMultiConsumerQueue.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchMultiConsumerQueue.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchMultiConsumerQueue.cpp",
+  "output": "bench/CMakeFiles/bench_mcspqueue.dir/BenchMultiConsumerQueue.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/bench",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/bench_mcspqueue_trivial.dir/BenchMultiConsumerQueueTrivial.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchMultiConsumerQueueTrivial.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchMultiConsumerQueueTrivial.cpp",
+  "output": "bench/CMakeFiles/bench_mcspqueue_trivial.dir/BenchMultiConsumerQueueTrivial.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/bench",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/bench_mpscqueue.dir/BenchMultiProducerQueue.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchMultiProducerQueue.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchMultiProducerQueue.cpp",
+  "output": "bench/CMakeFiles/bench_mpscqueue.dir/BenchMultiProducerQueue.cpp.o"
+},
+{
+  "directory": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/build/bench",
+  "command": "/usr/bin/c++  -I/home/co-p50183/exjobb/taskscheduler/taskscheduler/src -pthread -std=gnu++11 -Wall -Wextra -Wpedantic -Werror -Wno-unknown-warning-option -Wunused-function -Wno-invalid-offsetof -Wno-unused-value -Wno-deprecated-copy -Wno-gnu-zero-variadic-macro-arguments -fno-exceptions -fno-rtti -o CMakeFiles/bench_mpscqueue_trivial.dir/BenchMultiProducerQueueTrivial.cpp.o -c /home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchMultiProducerQueueTrivial.cpp",
+  "file": "/home/co-p50183/exjobb/taskscheduler/taskscheduler/bench/BenchMultiProducerQueueTrivial.cpp",
+  "output": "bench/CMakeFiles/bench_mpscqueue_trivial.dir/BenchMultiProducerQueueTrivial.cpp.o"
+}
+]
