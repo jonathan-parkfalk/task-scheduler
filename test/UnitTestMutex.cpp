@@ -11,6 +11,8 @@ namespace unittests {
 	static void
 	UnitTestMutexBasic()
 	{
+				const char* testName = "MutexBasic";
+
 		mg::common::Mutex mutex;
 		uint32_t counter = 0;
 		const uint32_t threadCount = 10;
@@ -24,11 +26,11 @@ namespace unittests {
 				while (mg::common::GetMilliseconds() < deadline)
 				{
 					mg::common::MutexLock lock(mutex);
-					MG_COMMON_ASSERT(counter == 0);
+					MG_COMMON_ASSERT_F(counter == 0, "(Failed)%s]]", testName);
 					counter++;
-					MG_COMMON_ASSERT(counter == 1);
+					MG_COMMON_ASSERT_F(counter == 1, "(Failed)%s]]", testName);
 					counter--;
-					MG_COMMON_ASSERT(counter == 0);
+					MG_COMMON_ASSERT_F(counter == 0, "(Failed)%s]]", testName);
 					if (++yield % 1000 == 0)
 						mg::common::Sleep(1);
 				}
@@ -38,7 +40,9 @@ namespace unittests {
 			f->Start();
 		for (mg::common::ThreadFunc* f : threads)
 			delete f;
-		MG_COMMON_ASSERT(counter == 0);
+		MG_COMMON_ASSERT_F(counter == 0, "(Failed)%s]]", testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	void

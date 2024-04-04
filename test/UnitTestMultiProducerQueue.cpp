@@ -13,6 +13,8 @@ namespace unittests {
 	static void
 	UnitTestMPQIBasic()
 	{
+				const char* testName = "MPQIBasic";
+
 		{
 			struct Entry
 			{
@@ -29,82 +31,82 @@ namespace unittests {
 
 			mg::common::MultiProducerQueueIntrusive<Entry> queue;
 			Entry* tail;
-			MG_COMMON_ASSERT(queue.IsEmpty());
-			MG_COMMON_ASSERT(queue.PopAll(tail) == nullptr && tail == nullptr);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.PopAll(tail) == nullptr && tail == nullptr, "(Failed)%s]]", testName);
 			Entry* garbage = (Entry*) &queue;
 			e1.myNext = garbage;
 			e2.myNext = garbage;
 			e3.myNext = garbage;
 
-			MG_COMMON_ASSERT(queue.Push(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.Push(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			Entry* res = queue.PopAll(tail);
-			MG_COMMON_ASSERT(queue.IsEmpty());
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(res->myNext == nullptr);
-			MG_COMMON_ASSERT(tail == &e1);
-			MG_COMMON_ASSERT(queue.PopAll(tail) == nullptr && tail == nullptr);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(res->myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(tail == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.PopAll(tail) == nullptr && tail == nullptr, "(Failed)%s]]", testName);
 			e1.myNext = garbage;
 
-			MG_COMMON_ASSERT(queue.Push(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
-			MG_COMMON_ASSERT(!queue.Push(&e2));
+			MG_COMMON_ASSERT_F(queue.Push(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.Push(&e2), "(Failed)%s]]", testName);
 			res = queue.PopAll(tail);
-			MG_COMMON_ASSERT(queue.IsEmpty());
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNext == &e2);
-			MG_COMMON_ASSERT(e2.myNext == nullptr);
-			MG_COMMON_ASSERT(tail == &e2);
-			MG_COMMON_ASSERT(queue.PopAll(tail) == nullptr && tail == nullptr);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNext == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(tail == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.PopAll(tail) == nullptr && tail == nullptr, "(Failed)%s]]", testName);
 			e1.myNext = garbage;
 			e2.myNext = garbage;
 
-			MG_COMMON_ASSERT(queue.Push(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
-			MG_COMMON_ASSERT(!queue.Push(&e2));
-			MG_COMMON_ASSERT(!queue.Push(&e3));
+			MG_COMMON_ASSERT_F(queue.Push(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.Push(&e2), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.Push(&e3), "(Failed)%s]]", testName);
 			res = queue.PopAll(tail);
-			MG_COMMON_ASSERT(queue.IsEmpty());
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNext == &e2);
-			MG_COMMON_ASSERT(e2.myNext == &e3);
-			MG_COMMON_ASSERT(e3.myNext == nullptr);
-			MG_COMMON_ASSERT(tail == &e3);
-			MG_COMMON_ASSERT(queue.PopAll(tail) == nullptr && tail == nullptr);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNext == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == &e3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e3.myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(tail == &e3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.PopAll(tail) == nullptr && tail == nullptr, "(Failed)%s]]", testName);
 
 			// Push empty reversed.
-			MG_COMMON_ASSERT(queue.PushManyFastReversed(nullptr));
-			MG_COMMON_ASSERT(queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushManyFastReversed(nullptr), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
 
 			// Push one reversed.
 			e1.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushManyFastReversed(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushManyFastReversed(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1 && res->myNext == nullptr);
-			MG_COMMON_ASSERT(queue.IsEmpty());
+			MG_COMMON_ASSERT_F(res == &e1 && res->myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
 
 			// Push 2 reversed.
 			e2.myNext = &e1;
 			e1.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushManyFastReversed(&e2));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushManyFastReversed(&e2), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNext == &e2);
-			MG_COMMON_ASSERT(e2.myNext == nullptr);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNext == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == nullptr, "(Failed)%s]]", testName);
 
 			// Push 3 reversed.
 			e3.myNext = &e2;
 			e2.myNext = &e1;
 			e1.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushManyFastReversed(&e3));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushManyFastReversed(&e3), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNext == &e2);
-			MG_COMMON_ASSERT(e2.myNext == &e3);
-			MG_COMMON_ASSERT(e3.myNext == nullptr);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNext == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == &e3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e3.myNext == nullptr, "(Failed)%s]]", testName);
 
 			// Push 4 reversed.
 			Entry e4;
@@ -113,36 +115,36 @@ namespace unittests {
 			e3.myNext = &e2;
 			e2.myNext = &e1;
 			e1.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushManyFastReversed(&e4));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushManyFastReversed(&e4), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNext == &e2);
-			MG_COMMON_ASSERT(e2.myNext == &e3);
-			MG_COMMON_ASSERT(e3.myNext == &e4);
-			MG_COMMON_ASSERT(e4.myNext == nullptr);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNext == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == &e3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e3.myNext == &e4, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e4.myNext == nullptr, "(Failed)%s]]", testName);
 
 			// Push empty reversed range.
-			MG_COMMON_ASSERT(queue.PushManyFastReversed(nullptr, nullptr));
-			MG_COMMON_ASSERT(queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushManyFastReversed(nullptr, nullptr), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
 
 			// Push one item in a reversed range.
 			e1.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushManyFastReversed(&e1, &e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushManyFastReversed(&e1, &e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1 && res->myNext == nullptr);
-			MG_COMMON_ASSERT(queue.IsEmpty());
+			MG_COMMON_ASSERT_F(res == &e1 && res->myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
 
 			// Push 2 in a reversed range.
 			e2.myNext = &e1;
 			e1.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushManyFastReversed(&e2, &e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushManyFastReversed(&e2, &e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNext == &e2);
-			MG_COMMON_ASSERT(e2.myNext == nullptr);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNext == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == nullptr, "(Failed)%s]]", testName);
 
 			// Make reversed range with non empty last next.
 			e4.myNext = &e3;
@@ -150,61 +152,61 @@ namespace unittests {
 			e2.myNext = &e1;
 			e1.myNext = nullptr;
 			// Should cut e4.
-			MG_COMMON_ASSERT(queue.PushManyFastReversed(&e4, &e2));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushManyFastReversed(&e4, &e2), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e2);
-			MG_COMMON_ASSERT(e2.myNext == &e3);
-			MG_COMMON_ASSERT(e3.myNext == &e4);
-			MG_COMMON_ASSERT(e4.myNext == nullptr);
+			MG_COMMON_ASSERT_F(res == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == &e3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e3.myNext == &e4, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e4.myNext == nullptr, "(Failed)%s]]", testName);
 
 			// Push many empty.
-			MG_COMMON_ASSERT(queue.PushMany(nullptr));
-			MG_COMMON_ASSERT(queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushMany(nullptr), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
 
 			// Push 1 as many.
 			e1.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushMany(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushMany(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1 && res->myNext == nullptr);
-			MG_COMMON_ASSERT(queue.IsEmpty());
+			MG_COMMON_ASSERT_F(res == &e1 && res->myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
 
 			// Push 2 as many.
 			e1.myNext = &e2;
 			e2.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushMany(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushMany(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNext == &e2);
-			MG_COMMON_ASSERT(e2.myNext == nullptr);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNext == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == nullptr, "(Failed)%s]]", testName);
 
 			// Push 3 as many.
 			e1.myNext = &e2;
 			e2.myNext = &e3;
 			e3.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushMany(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushMany(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNext == &e2);
-			MG_COMMON_ASSERT(e2.myNext == &e3);
-			MG_COMMON_ASSERT(e3.myNext == nullptr);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNext == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == &e3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e3.myNext == nullptr, "(Failed)%s]]", testName);
 
 			// Push 4 as many.
 			e1.myNext = &e2;
 			e2.myNext = &e3;
 			e3.myNext = &e4;
 			e4.myNext = nullptr;
-			MG_COMMON_ASSERT(queue.PushMany(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushMany(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll();
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNext == &e2);
-			MG_COMMON_ASSERT(e2.myNext == &e3);
-			MG_COMMON_ASSERT(e3.myNext == &e4);
-			MG_COMMON_ASSERT(e4.myNext == nullptr);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNext == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNext == &e3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e3.myNext == &e4, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e4.myNext == nullptr, "(Failed)%s]]", testName);
 		}
 		{
 			// Try non-default link name.
@@ -221,38 +223,42 @@ namespace unittests {
 
 			mg::common::MultiProducerQueueIntrusive<Entry, &Entry::myNextInQueue> queue;
 			Entry* tail;
-			MG_COMMON_ASSERT(queue.IsEmpty());
-			MG_COMMON_ASSERT(queue.PopAll(tail) == nullptr && tail == nullptr);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.PopAll(tail) == nullptr && tail == nullptr, "(Failed)%s]]", testName);
 			Entry* garbage = (Entry*) &queue;
 			e1.myNextInQueue = garbage;
 			e2.myNextInQueue = garbage;
 
-			MG_COMMON_ASSERT(queue.Push(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
-			MG_COMMON_ASSERT(!queue.Push(&e2));
+			MG_COMMON_ASSERT_F(queue.Push(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.Push(&e2), "(Failed)%s]]", testName);
 			Entry* res = queue.PopAll(tail);
-			MG_COMMON_ASSERT(queue.IsEmpty());
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNextInQueue == &e2);
-			MG_COMMON_ASSERT(e2.myNextInQueue == nullptr);
-			MG_COMMON_ASSERT(tail == &e2);
-			MG_COMMON_ASSERT(queue.PopAll(tail) == nullptr && tail == nullptr);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNextInQueue == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNextInQueue == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(tail == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.PopAll(tail) == nullptr && tail == nullptr, "(Failed)%s]]", testName);
 
 			e1.myNextInQueue = &e2;
 			e2.myNextInQueue = nullptr;
-			MG_COMMON_ASSERT(queue.PushMany(&e1));
-			MG_COMMON_ASSERT(!queue.IsEmpty());
+			MG_COMMON_ASSERT_F(queue.PushMany(&e1), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.IsEmpty(), "(Failed)%s]]", testName);
 			res = queue.PopAll(tail);
-			MG_COMMON_ASSERT(queue.IsEmpty());
-			MG_COMMON_ASSERT(res == &e1);
-			MG_COMMON_ASSERT(e1.myNextInQueue == &e2);
-			MG_COMMON_ASSERT(e2.myNextInQueue == nullptr);
+			MG_COMMON_ASSERT_F(queue.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(res == &e1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e1.myNextInQueue == &e2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(e2.myNextInQueue == nullptr, "(Failed)%s]]", testName);
 		}
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestMPQIStress()
 	{
+				const char* testName = "MPQIStress";
+
 		struct Entry
 		{
 			Entry(
@@ -328,7 +334,7 @@ namespace unittests {
 			if (++yield % 1000 == 0)
 				mg::common::Sleep(1);
 		}
-		MG_COMMON_ASSERT(data.size() == itemCount * threadCount);
+		MG_COMMON_ASSERT_F(data.size() == itemCount * threadCount, "(Failed)%s]]", testName);
 		for (mg::common::ThreadFunc* f : threads)
 			delete f;
 		std::vector<uint32_t> counters;
@@ -336,9 +342,10 @@ namespace unittests {
 		for (uint32_t i = 0; i < threadCount; ++i)
 			counters.push_back(0);
 		for (Entry* e : data)
-			MG_COMMON_ASSERT(e->myId == counters[e->myThreadId]++);
+			MG_COMMON_ASSERT_F(e->myId == counters[e->myThreadId]++, "(Failed)%s]]", testName);
 		for (uint32_t count : counters)
-			MG_COMMON_ASSERT(count == itemCount);
+			MG_COMMON_ASSERT_F(count == itemCount, "(Failed)%s]]", testName);
+		Report("(Passed)%s]]", testName);
 	}
 
 	void

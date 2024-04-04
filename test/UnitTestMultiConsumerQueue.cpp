@@ -84,48 +84,51 @@ namespace unittests {
 	static void
 	UnitTestMCQLockedBasic()
 	{
+		const char* testName = "MCQLockedBasic";
 		UTMCQueueLocked queue;
 
 		UTMCQValue v1;
 		UTMCQValue v2;
 		UTMCQValue v3;
 
-		MG_COMMON_ASSERT(queue.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(queue.Pop() == nullptr, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(queue.Push(&v1));
-		MG_COMMON_ASSERT(queue.Pop() == &v1);
-		MG_COMMON_ASSERT(queue.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(queue.Push(&v1), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == nullptr, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(queue.Push(&v1));
-		MG_COMMON_ASSERT(!queue.Push(&v2));
-		MG_COMMON_ASSERT(queue.Pop() == &v1);
-		MG_COMMON_ASSERT(queue.Pop() == &v2);
-		MG_COMMON_ASSERT(queue.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(queue.Push(&v1), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!queue.Push(&v2), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == nullptr, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(queue.Push(&v1));
-		MG_COMMON_ASSERT(!queue.Push(&v2));
-		MG_COMMON_ASSERT(!queue.Push(&v3));
-		MG_COMMON_ASSERT(queue.Pop() == &v1);
-		MG_COMMON_ASSERT(queue.Pop() == &v2);
-		MG_COMMON_ASSERT(queue.Pop() == &v3);
-		MG_COMMON_ASSERT(queue.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(queue.Push(&v1), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!queue.Push(&v2), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!queue.Push(&v3), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == &v3, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == nullptr, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(queue.Push(&v1));
-		MG_COMMON_ASSERT(!queue.Push(&v2));
-		MG_COMMON_ASSERT(queue.Pop() == &v1);
-		MG_COMMON_ASSERT(!queue.Push(&v3));
-		MG_COMMON_ASSERT(queue.Pop() == &v2);
-		MG_COMMON_ASSERT(queue.Pop() == &v3);
-		MG_COMMON_ASSERT(queue.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(queue.Push(&v1), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!queue.Push(&v2), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!queue.Push(&v3), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == &v3, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Pop() == nullptr, "(Failed)%s]]", testName);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestMCQBasic()
 	{
+		const char* testName = "MCQBasic";
 		UTMCQueue queue(5);
-		MG_COMMON_ASSERT(queue.Count() == 0);
-		MG_COMMON_ASSERT(queue.ConsumerCount() == 0);
-		MG_COMMON_ASSERT(queue.SubQueueCount() == 1);
+		MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.ConsumerCount() == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.SubQueueCount() == 1, "(Failed)%s]]", testName);
 
 		{
 			// Ensure empty consumer is destroyed fine.
@@ -134,63 +137,63 @@ namespace unittests {
 
 		UTMCQueueConsumer c1;
 		c1.Attach(&queue);
-		MG_COMMON_ASSERT(queue.ConsumerCount() == 1);
+		MG_COMMON_ASSERT_F(queue.ConsumerCount() == 1, "(Failed)%s]]", testName);
 
 		UTMCQValue v1;
 		UTMCQValue v2;
 		UTMCQValue v3;
 
-		MG_COMMON_ASSERT(c1.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(c1.Pop() == nullptr, "(Failed)%s]]", testName);
 
 		// Push-pop single.
-		MG_COMMON_ASSERT(queue.Push(&v1));
-		MG_COMMON_ASSERT(queue.Count() == 1);
+		MG_COMMON_ASSERT_F(queue.Push(&v1), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == &v1);
-		MG_COMMON_ASSERT(queue.Count() == 0);
+		MG_COMMON_ASSERT_F(c1.Pop() == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(c1.Pop() == nullptr, "(Failed)%s]]", testName);
 
 		// Push-pop 2 elements.
-		MG_COMMON_ASSERT(queue.Push(&v1));
-		MG_COMMON_ASSERT(queue.Count() == 1);
+		MG_COMMON_ASSERT_F(queue.Push(&v1), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(!queue.Push(&v2));
-		MG_COMMON_ASSERT(queue.Count() == 2);
+		MG_COMMON_ASSERT_F(!queue.Push(&v2), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == &v1);
-		MG_COMMON_ASSERT(queue.Count() == 1);
+		MG_COMMON_ASSERT_F(c1.Pop() == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == &v2);
-		MG_COMMON_ASSERT(queue.Count() == 0);
+		MG_COMMON_ASSERT_F(c1.Pop() == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(c1.Pop() == nullptr, "(Failed)%s]]", testName);
 
 		// Push-pop 3 elements. Number of sub-queues becomes 2,
 		// because the first one was of size 5, and next 2 pushes
 		// fill it.
-		MG_COMMON_ASSERT(queue.Push(&v1));
-		MG_COMMON_ASSERT(queue.Count() == 1);
+		MG_COMMON_ASSERT_F(queue.Push(&v1), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(!queue.Push(&v2));
-		MG_COMMON_ASSERT(queue.Count() == 2);
-		MG_COMMON_ASSERT(queue.SubQueueCount() == 1);
+		MG_COMMON_ASSERT_F(!queue.Push(&v2), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.SubQueueCount() == 1, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(!queue.Push(&v3));
-		MG_COMMON_ASSERT(queue.Count() == 3);
-		MG_COMMON_ASSERT(queue.SubQueueCount() == 2);
+		MG_COMMON_ASSERT_F(!queue.Push(&v3), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 3, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.SubQueueCount() == 2, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == &v1);
-		MG_COMMON_ASSERT(queue.Count() == 2);
+		MG_COMMON_ASSERT_F(c1.Pop() == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == &v2);
-		MG_COMMON_ASSERT(queue.Count() == 1);
+		MG_COMMON_ASSERT_F(c1.Pop() == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == &v3);
-		MG_COMMON_ASSERT(queue.Count() == 0);
-		MG_COMMON_ASSERT(queue.SubQueueCount() == 2);
+		MG_COMMON_ASSERT_F(c1.Pop() == &v3, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.SubQueueCount() == 2, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(c1.Pop() == nullptr, "(Failed)%s]]", testName);
 
 		// Ensure the sub-queues are recycled. Push-pop 5 elements
 		// 2 times - the sub-queue count does not change.
@@ -200,17 +203,19 @@ namespace unittests {
 		{
 			for (int j = 0; j < count; ++j)
 				queue.Push(&vs[j]);
-			MG_COMMON_ASSERT(queue.Count() == count);
+			MG_COMMON_ASSERT_F(queue.Count() == count, "(Failed)%s]]", testName);
 			for (int j = 0; j < count; ++j)
-				MG_COMMON_ASSERT(c1.Pop() == &vs[j]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
+				MG_COMMON_ASSERT_F(c1.Pop() == &vs[j], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(queue.SubQueueCount() == 2);
+		MG_COMMON_ASSERT_F(queue.SubQueueCount() == 2, "(Failed)%s]]", testName);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestMCQPending()
 	{
+		const char* testName = "MCQPending";
 		UTMCQValue v[10];
 		{
 			UTMCQueue queue(5);
@@ -218,15 +223,15 @@ namespace unittests {
 			c.Attach(&queue);
 
 			// Push one.
-			MG_COMMON_ASSERT(!queue.PushPending(&v[0]));
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+			MG_COMMON_ASSERT_F(!queue.PushPending(&v[0]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 
-			MG_COMMON_ASSERT(queue.FlushPending());
-			MG_COMMON_ASSERT(queue.Count() == 1);
-			MG_COMMON_ASSERT(c.Pop() == &v[0]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+			MG_COMMON_ASSERT_F(queue.FlushPending(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[0], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 		}
 		{
 			UTMCQueue queue(5);
@@ -234,23 +239,23 @@ namespace unittests {
 			c.Attach(&queue);
 
 			// Flush on empty queue does not do anything.
-			MG_COMMON_ASSERT(!queue.FlushPending());
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+			MG_COMMON_ASSERT_F(!queue.FlushPending(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 
 			// Push 2 so the first one is saved, and the second is
 			// written but not available yet.
-			MG_COMMON_ASSERT(!queue.PushPending(&v[0]));
-			MG_COMMON_ASSERT(!queue.PushPending(&v[1]));
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+			MG_COMMON_ASSERT_F(!queue.PushPending(&v[0]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.PushPending(&v[1]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 
-			MG_COMMON_ASSERT(queue.FlushPending());
-			MG_COMMON_ASSERT(queue.Count() == 2);
-			MG_COMMON_ASSERT(c.Pop() == &v[0]);
-			MG_COMMON_ASSERT(c.Pop() == &v[1]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+			MG_COMMON_ASSERT_F(queue.FlushPending(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[0], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[1], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 		}
 		{
 			UTMCQueue queue(5);
@@ -259,22 +264,22 @@ namespace unittests {
 
 			// Pending push does the flush when wpos is switched.
 			for (int i = 0; i < 5; ++i)
-				MG_COMMON_ASSERT(!queue.PushPending(&v[i]));
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+				MG_COMMON_ASSERT_F(!queue.PushPending(&v[i]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 
-			MG_COMMON_ASSERT(queue.PushPending(&v[5]));
-			MG_COMMON_ASSERT(queue.Count() == 5);
+			MG_COMMON_ASSERT_F(queue.PushPending(&v[5]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 5, "(Failed)%s]]", testName);
 			for (int i = 0; i < 5; ++i)
-				MG_COMMON_ASSERT(c.Pop() == &v[i]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+				MG_COMMON_ASSERT_F(c.Pop() == &v[i], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 
-			MG_COMMON_ASSERT(queue.FlushPending());
-			MG_COMMON_ASSERT(queue.Count() == 1);
-			MG_COMMON_ASSERT(c.Pop() == &v[5]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+			MG_COMMON_ASSERT_F(queue.FlushPending(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[5], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 		}
 		{
 			UTMCQueue queue(5);
@@ -282,12 +287,12 @@ namespace unittests {
 			c.Attach(&queue);
 
 			// Double-flush does not change anything.
-			MG_COMMON_ASSERT(!queue.PushPending(&v[0]));
-			MG_COMMON_ASSERT(queue.FlushPending());
-			MG_COMMON_ASSERT(!queue.FlushPending());
-			MG_COMMON_ASSERT(c.Pop() == &v[0]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+			MG_COMMON_ASSERT_F(!queue.PushPending(&v[0]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.FlushPending(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.FlushPending(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[0], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 		}
 		{
 			UTMCQueue queue(5);
@@ -295,14 +300,14 @@ namespace unittests {
 			c.Attach(&queue);
 
 			// Normal push does the flush.
-			MG_COMMON_ASSERT(!queue.PushPending(&v[0]));
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(queue.Push(&v[1]));
-			MG_COMMON_ASSERT(queue.Count() == 2);
-			MG_COMMON_ASSERT(c.Pop() == &v[0]);
-			MG_COMMON_ASSERT(c.Pop() == &v[1]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+			MG_COMMON_ASSERT_F(!queue.PushPending(&v[0]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Push(&v[1]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[0], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[1], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 		}
 		{
 			UTMCQueue queue(5);
@@ -311,15 +316,15 @@ namespace unittests {
 
 			// Second flush-via-push won't return that the queue
 			// was empty.
-			MG_COMMON_ASSERT(queue.Push(&v[0]));
-			MG_COMMON_ASSERT(!queue.PushPending(&v[1]));
-			MG_COMMON_ASSERT(!queue.Push(&v[2]));
-			MG_COMMON_ASSERT(queue.Count() == 3);
-			MG_COMMON_ASSERT(c.Pop() == &v[0]);
-			MG_COMMON_ASSERT(c.Pop() == &v[1]);
-			MG_COMMON_ASSERT(c.Pop() == &v[2]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+			MG_COMMON_ASSERT_F(queue.Push(&v[0]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.PushPending(&v[1]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!queue.Push(&v[2]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[0], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[1], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == &v[2], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 		}
 		{
 			UTMCQueue queue(5);
@@ -329,25 +334,27 @@ namespace unittests {
 			// Sub-queue switch when normal push happens, but
 			// there is a pending item.
 			for (int i = 0; i < 5; ++i)
-				MG_COMMON_ASSERT(!queue.PushPending(&v[i]));
-			MG_COMMON_ASSERT(queue.Push(&v[5]));
-			MG_COMMON_ASSERT(queue.Count() == 6);
+				MG_COMMON_ASSERT_F(!queue.PushPending(&v[i]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Push(&v[5]), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 6, "(Failed)%s]]", testName);
 			for (int i = 0; i < 6; ++i)
-				MG_COMMON_ASSERT(c.Pop() == &v[i]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
-			MG_COMMON_ASSERT(c.Pop() == nullptr);
+				MG_COMMON_ASSERT_F(c.Pop() == &v[i], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c.Pop() == nullptr, "(Failed)%s]]", testName);
 		}
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestMCQSingleElement()
 	{
+		const char* testName = "MCQSingleElement";
 		// Ensure the queue still works even with sub-queues of
 		// size 1.
 		UTMCQueue queue(1);
-		MG_COMMON_ASSERT(queue.Count() == 0);
-		MG_COMMON_ASSERT(queue.ConsumerCount() == 0);
-		MG_COMMON_ASSERT(queue.SubQueueCount() == 1);
+		MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.ConsumerCount() == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.SubQueueCount() == 1, "(Failed)%s]]", testName);
 
 		UTMCQValue v1;
 		UTMCQValue v2;
@@ -355,23 +362,25 @@ namespace unittests {
 		queue.Push(&v1);
 		queue.Push(&v2);
 		queue.Push(&v3);
-		MG_COMMON_ASSERT(queue.Count() == 3);
-		MG_COMMON_ASSERT(queue.ConsumerCount() == 0);
-		MG_COMMON_ASSERT(queue.SubQueueCount() == 3);
+		MG_COMMON_ASSERT_F(queue.Count() == 3, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.ConsumerCount() == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.SubQueueCount() == 3, "(Failed)%s]]", testName);
 
 		UTMCQueueConsumer c1(&queue);
-		MG_COMMON_ASSERT(c1.Pop() == &v1);
-		MG_COMMON_ASSERT(queue.Count() == 2);
-		MG_COMMON_ASSERT(c1.Pop() == &v2);
-		MG_COMMON_ASSERT(queue.Count() == 1);
-		MG_COMMON_ASSERT(c1.Pop() == &v3);
-		MG_COMMON_ASSERT(queue.Count() == 0);
-		MG_COMMON_ASSERT(c1.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(c1.Pop() == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(c1.Pop() == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(c1.Pop() == &v3, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(c1.Pop() == nullptr, "(Failed)%s]]", testName);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestMCQConsumerGap()
 	{
+		const char* testName = "MCQConsumerGap";
 		// See what happens when consumers have a gap between
 		// each other. So one of them is beyond the sub-queue list
 		// head.
@@ -389,55 +398,57 @@ namespace unittests {
 		// [0, 1] -> [2, 3] -> [4, 5] -> [6, 7]
 		//  c1
 		//  c2
-		MG_COMMON_ASSERT(c1.Pop() == &vs[0]);
-		MG_COMMON_ASSERT(queue.Count() == 7);
-		MG_COMMON_ASSERT(c1.Pop() == &vs[1]);
-		MG_COMMON_ASSERT(queue.Count() == 6);
+		MG_COMMON_ASSERT_F(c1.Pop() == &vs[0], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 7, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(c1.Pop() == &vs[1], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 6, "(Failed)%s]]", testName);
 		// [x, x] -> [2, 3] -> [4, 5] -> [6, 7]
 		//  c2        c1
-		MG_COMMON_ASSERT(c1.Pop() == &vs[2]);
-		MG_COMMON_ASSERT(queue.Count() == 5);
-		MG_COMMON_ASSERT(c1.Pop() == &vs[3]);
-		MG_COMMON_ASSERT(queue.Count() == 4);
+		MG_COMMON_ASSERT_F(c1.Pop() == &vs[2], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 5, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(c1.Pop() == &vs[3], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 4, "(Failed)%s]]", testName);
 		// [x, x] -> [x, x] -> [4, 5] -> [6, 7]
 		//  c2           c1
-		MG_COMMON_ASSERT(c1.Pop() == &vs[4]);
-		MG_COMMON_ASSERT(queue.Count() == 3);
+		MG_COMMON_ASSERT_F(c1.Pop() == &vs[4], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 3, "(Failed)%s]]", testName);
 		// [x, x] -> [x, 5] -> [6, 7]
 		//  c2        c1
 
 		// But still is referenced by one of the consumers. And it
 		// should recycle it and the next sub-queue now.
-		MG_COMMON_ASSERT(c2.Pop() == &vs[5]);
-		MG_COMMON_ASSERT(queue.Count() == 2);
+		MG_COMMON_ASSERT_F(c2.Pop() == &vs[5], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
 		//  [x, x] -> [6, 7]
 		//   c1 c2
-		MG_COMMON_ASSERT(c1.Pop() == &vs[6]);
-		MG_COMMON_ASSERT(queue.Count() == 1);
+		MG_COMMON_ASSERT_F(c1.Pop() == &vs[6], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
 		// [x, x] -> [x, 7]
 		//     c2     c1
-		MG_COMMON_ASSERT(c2.Pop() == &vs[7]);
-		MG_COMMON_ASSERT(queue.Count() == 0);
+		MG_COMMON_ASSERT_F(c2.Pop() == &vs[7], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
 		// [x, x]
 		//  c1 c2
-		MG_COMMON_ASSERT(c1.Pop() == nullptr);
-		MG_COMMON_ASSERT(c2.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(c1.Pop() == nullptr, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(c2.Pop() == nullptr, "(Failed)%s]]", testName);
 
 		// Ensure it is still functional.
 		queue.Push(&vs[0]);
 		queue.Push(&vs[1]);
-		MG_COMMON_ASSERT(c1.Pop() == &vs[0]);
-		MG_COMMON_ASSERT(queue.Count() == 1);
-		MG_COMMON_ASSERT(c2.Pop() == &vs[1]);
-		MG_COMMON_ASSERT(queue.Count() == 0);
+		MG_COMMON_ASSERT_F(c1.Pop() == &vs[0], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(c2.Pop() == &vs[1], "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(c1.Pop() == nullptr);
-		MG_COMMON_ASSERT(c2.Pop() == nullptr);
+		MG_COMMON_ASSERT_F(c1.Pop() == nullptr, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(c2.Pop() == nullptr, "(Failed)%s]]", testName);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestMCQConsumerDetach()
 	{
+		const char* testName = "MCQConsumerDetach";
 		// See what happens when detach happens for the consumer
 		// keeping the head sub-queue, when it is already empty.
 		UTMCQValue vs[8];
@@ -455,36 +466,36 @@ namespace unittests {
 				queue.Push(&vs[i]);
 
 			// The head is fully consumed.
-			MG_COMMON_ASSERT(c1.Pop() == &vs[0]);
-			MG_COMMON_ASSERT(queue.Count() == 5);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[1]);
-			MG_COMMON_ASSERT(queue.Count() == 4);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[2]);
-			MG_COMMON_ASSERT(queue.Count() == 3);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[3]);
-			MG_COMMON_ASSERT(queue.Count() == 2);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[0], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 5, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[1], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 4, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[2], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[3], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
 
 			// The consumer, keeping the head is detached. The
 			// head still should be recycled. Either at detach, or
 			// by another consumer later.
 			c2.Detach();
 
-			MG_COMMON_ASSERT(c1.Pop() == &vs[4]);
-			MG_COMMON_ASSERT(queue.Count() == 1);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[5]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[4], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[5], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
 
 			queue.Push(&vs[6]);
 			queue.Push(&vs[7]);
 
-			MG_COMMON_ASSERT(c1.Pop() == &vs[6]);
-			MG_COMMON_ASSERT(queue.Count() == 1);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[7]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[6], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[7], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
 
 			// The head was recycled at detach. So 3 sub-queues,
 			// not 4.
-			MG_COMMON_ASSERT(queue.SubQueueCount() == 3);
+			MG_COMMON_ASSERT_F(queue.SubQueueCount() == 3, "(Failed)%s]]", testName);
 		}
 
 		// Detach can happen when the head is empty, and no more
@@ -499,14 +510,14 @@ namespace unittests {
 				queue.Push(&vs[i]);
 
 			// The head is fully consumed.
-			MG_COMMON_ASSERT(c1.Pop() == &vs[0]);
-			MG_COMMON_ASSERT(queue.Count() == 5);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[1]);
-			MG_COMMON_ASSERT(queue.Count() == 4);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[2]);
-			MG_COMMON_ASSERT(queue.Count() == 3);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[3]);
-			MG_COMMON_ASSERT(queue.Count() == 2);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[0], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 5, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[1], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 4, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[2], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[3], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
 
 			// The leading consumer is detached. It can't recycle
 			// anything because there is a second consumer staying
@@ -520,18 +531,18 @@ namespace unittests {
 			// not 4.
 			queue.Push(&vs[6]);
 			queue.Push(&vs[7]);
-			MG_COMMON_ASSERT(queue.SubQueueCount() == 3);
+			MG_COMMON_ASSERT_F(queue.SubQueueCount() == 3, "(Failed)%s]]", testName);
 
 			// Validate.
 			c1.Attach(&queue);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[4]);
-			MG_COMMON_ASSERT(queue.Count() == 3);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[5]);
-			MG_COMMON_ASSERT(queue.Count() == 2);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[6]);
-			MG_COMMON_ASSERT(queue.Count() == 1);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[7]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[4], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[5], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[6], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[7], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
 		}
 
 		// Recycle at detach should not do anything with
@@ -548,13 +559,13 @@ namespace unittests {
 
 			// The head is fully consumed, and another sub-queue
 			// is consumed in half.
-			MG_COMMON_ASSERT(c1.Pop() == &vs[0]);
-			MG_COMMON_ASSERT(queue.Count() == 3);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[1]);
-			MG_COMMON_ASSERT(queue.Count() == 2);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[2]);
-			MG_COMMON_ASSERT(queue.Count() == 1);
-			MG_COMMON_ASSERT(queue.SubQueueCount() == 2);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[0], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[1], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[2], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.SubQueueCount() == 2, "(Failed)%s]]", testName);
 
 			// The leading consumer is detached. It can't recycle
 			// anything because there is a second consumer staying
@@ -563,7 +574,7 @@ namespace unittests {
 
 			queue.Push(&vs[4]);
 			queue.Push(&vs[5]);
-			MG_COMMON_ASSERT(queue.SubQueueCount() == 3);
+			MG_COMMON_ASSERT_F(queue.SubQueueCount() == 3, "(Failed)%s]]", testName);
 
 			// The head consumer should recycle *not* until wpos,
 			// but until the last non-consumed sub-queue.
@@ -573,21 +584,22 @@ namespace unittests {
 			// not 4.
 			queue.Push(&vs[6]);
 			queue.Push(&vs[7]);
-			MG_COMMON_ASSERT(queue.SubQueueCount() == 3);
+			MG_COMMON_ASSERT_F(queue.SubQueueCount() == 3, "(Failed)%s]]", testName);
 
 			// Validate.
 			c1.Attach(&queue);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[3]);
-			MG_COMMON_ASSERT(queue.Count() == 4);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[4]);
-			MG_COMMON_ASSERT(queue.Count() == 3);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[5]);
-			MG_COMMON_ASSERT(queue.Count() == 2);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[6]);
-			MG_COMMON_ASSERT(queue.Count() == 1);
-			MG_COMMON_ASSERT(c1.Pop() == &vs[7]);
-			MG_COMMON_ASSERT(queue.Count() == 0);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[3], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 4, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[4], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[5], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[6], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(c1.Pop() == &vs[7], "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(queue.Count() == 0, "(Failed)%s]]", testName);
 		}
+		Report("(Passed)%s]]", testName);
 	}
 
 	class UTMCQLockedConsumerThread
@@ -625,7 +637,7 @@ namespace unittests {
 			{
 				while ((v = myQueue->Pop()) != nullptr)
 				{
-					MG_COMMON_ASSERT(v->myValue >= 0);
+					MG_COMMON_ASSERT_F(v->myValue >= 0, "(Failed)MCQLockedStress]]");
 					v->myValue = -v->myValue;
 					++myPopCount;
 					myTotalPopCount->IncrementRelaxed();
@@ -647,6 +659,7 @@ namespace unittests {
 		int aElementCount,
 		int aThreadCount)
 	{
+		const char* testName = "MCQLockedStress";
 		UTMCQueueLocked queue;
 		mg::common::AtomicU32 popCount(0);
 		UTMCQValue* values = new UTMCQValue[aElementCount];
@@ -680,7 +693,7 @@ namespace unittests {
 			threads[i].BlockingStop();
 
 		for (int i = 0; i < aElementCount; ++i)
-			MG_COMMON_ASSERT(values[i].myValue == -i);
+			MG_COMMON_ASSERT_F(values[i].myValue == -i, "(Failed)%s]]", testName);
 
 		Report(
 			"Locked queue, elements = %d, threads = %d, duration = %lf ms",
@@ -691,6 +704,7 @@ namespace unittests {
 
 		delete[] threads;
 		delete[] values;
+		Report("(Passed)%s]]", testName);
 	}
 
 	class UTMCQConsumerThread
@@ -723,7 +737,7 @@ namespace unittests {
 			{
 				while ((v = myConsumer.Pop()) != nullptr)
 				{
-					MG_COMMON_ASSERT(v->myValue >= 0);
+					MG_COMMON_ASSERT_F(v->myValue >= 0, "(Failed)MCQStress]]");
 					v->myValue = -v->myValue;
 					++myPopCount;
 					myTotalPopCount->IncrementRelaxed();
@@ -748,6 +762,7 @@ namespace unittests {
 		int aElementCount,
 		int aThreadCount)
 	{
+		const char* testName = "MCQStress";
 		UTMCQueue queue(aSubQueueSize);
 		if (aReserve)
 			queue.Reserve(aElementCount);
@@ -789,11 +804,11 @@ namespace unittests {
 			threads[i].BlockingStop();
 
 		for (int i = 0; i < aElementCount; ++i)
-			MG_COMMON_ASSERT(values[i].myValue == -i);
+			MG_COMMON_ASSERT_F(values[i].myValue == -i, "(Failed)%s]]", testName);
 
 		uint32_t subQueueCountMax =
 			aElementCount / aSubQueueSize + (aElementCount % aSubQueueSize != 0);
-		MG_COMMON_ASSERT(queue.SubQueueCount() <= subQueueCountMax);
+		MG_COMMON_ASSERT_F(queue.SubQueueCount() <= subQueueCountMax, "(Failed)%s]]", testName);
 
 		Report(
 			"Special queue, elements = %d, threads = %d, duration = %lf ms, "
@@ -806,6 +821,7 @@ namespace unittests {
 
 		delete[] threads;
 		delete[] values;
+		Report("(Passed)%s]]", testName);
 	}
 
 	void

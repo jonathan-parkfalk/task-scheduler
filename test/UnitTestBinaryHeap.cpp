@@ -61,50 +61,51 @@ namespace unittests {
 
 		static void
 		UseCopyConstrCount(
-			int aToUse)
+			int aToUse,
+			const char* testName)
 		{
 			ourCopyConstrCount -= aToUse;
-			MG_COMMON_ASSERT(ourCopyConstrCount >= 0);
+			MG_COMMON_ASSERT_F(ourCopyConstrCount >= 0, "(Failed)%s]]", testName);
 		}
 
 		static void
 		UseCopyAssignCount(
-			int aToUse)
+			int aToUse, const char* testName)
 		{
 			ourCopyAssignCount -= aToUse;
-			MG_COMMON_ASSERT(ourCopyAssignCount >= 0);
+			MG_COMMON_ASSERT_F(ourCopyAssignCount >= 0, "(Failed)%s]]", testName);
 		}
 
 		static void
 		UseMoveConstrCount(
-			int aToUse)
+			int aToUse, const char* testName)
 		{
 			ourMoveConstrCount -= aToUse;
-			MG_COMMON_ASSERT(ourMoveConstrCount >= 0);
+			MG_COMMON_ASSERT_F(ourMoveConstrCount >= 0, "(Failed)%s]]", testName);
 		}
 
 		static void
 		UseMoveAssignCount(
-			int aToUse)
+			int aToUse, const char* testName)
 		{
 			ourMoveAssignCount -= aToUse;
-			MG_COMMON_ASSERT(ourMoveAssignCount >= 0);
+			MG_COMMON_ASSERT_F(ourMoveAssignCount >= 0, "(Failed)%s]]", testName);
 		}
 
 		static void
 		UseConstrCount(
-			int aToUse)
+			int aToUse, const char* testName)
 		{
 			ourConstrCount -= aToUse;
-			MG_COMMON_ASSERT(ourConstrCount >= 0);
+			MG_COMMON_ASSERT_F(ourConstrCount >= 0, "(Failed)%s]]", testName);
 		}
 
 		static void
 		UseDestrCount(
-			int aToUse)
+			int aToUse, const char* testName)
 		{
 			ourDestrCount -= aToUse;
-			MG_COMMON_ASSERT(ourDestrCount >= 0);
+			MG_COMMON_ASSERT_F(ourDestrCount >= 0, "(Failed)%s]]", testName);
 		}
 
 		static void
@@ -119,12 +120,12 @@ namespace unittests {
 		}
 
 		static void
-		CheckCounters()
+		CheckCounters(const char* testName)
 		{
-			MG_COMMON_ASSERT(
+			MG_COMMON_ASSERT_F(
 				ourCopyConstrCount == 0 && ourCopyAssignCount == 0 &&
 				ourMoveConstrCount == 0 && ourMoveAssignCount == 0 &&
-				ourConstrCount == 0 && ourDestrCount == 0
+				ourConstrCount == 0 && ourDestrCount == 0, "(Failed)%s]]", testName
 			);
 		}
 
@@ -163,6 +164,7 @@ namespace unittests {
 	static void
 	UnitTestBinaryHeapBasic()
 	{
+		const char* testName = "BinaryHeapBasic";
 		// On 9 the permutation count is 362880.
 		// On 10 it is 3628800 - the test becomes too long
 		// (order of seconds instead of milliseconds).
@@ -171,8 +173,8 @@ namespace unittests {
 		{
 			mg::common::BinaryHeapMinPtr<UTBHeapValue> heap;
 			UTBHeapValue* pop = nullptr;
-			MG_COMMON_ASSERT(!heap.Pop(pop));
-			MG_COMMON_ASSERT(heap.Count() == 0);
+			MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 			for (int i = 0; i < count; ++i)
 				values[i].myValue = i;
 
@@ -185,24 +187,24 @@ namespace unittests {
 				{
 					for (int i = 0; i < counti; ++i)
 						heap.Push(&values[indexes[i]]);
-					MG_COMMON_ASSERT(heap.Count() == (uint32_t)counti);
+					MG_COMMON_ASSERT_F(heap.Count() == (uint32_t)counti, "(Failed)%s]]", testName);
 					for (int i = 0; i < counti; ++i)
 					{
 						pop = nullptr;
-						MG_COMMON_ASSERT(heap.GetTop() == &values[i]);
-						MG_COMMON_ASSERT(heap.Pop(pop));
-						MG_COMMON_ASSERT(pop == &values[i]);
+						MG_COMMON_ASSERT_F(heap.GetTop() == &values[i], "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(pop == &values[i], "(Failed)%s]]", testName);
 					}
-					MG_COMMON_ASSERT(!heap.Pop(pop));
-					MG_COMMON_ASSERT(heap.Count() == 0);
+					MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+					MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 				} while (std::next_permutation(&indexes[0], &indexes[counti]));
 			}
 		}
 		{
 			mg::common::BinaryHeapMaxPtr<UTBHeapValue> heap;
 			UTBHeapValue* pop = nullptr;
-			MG_COMMON_ASSERT(!heap.Pop(pop));
-			MG_COMMON_ASSERT(heap.Count() == 0);
+			MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 			for (int i = 0; i < count; ++i)
 				values[i].myValue = count - 1 - i;
 
@@ -215,16 +217,16 @@ namespace unittests {
 				{
 					for (int i = 0; i < counti; ++i)
 						heap.Push(&values[indexes[i]]);
-					MG_COMMON_ASSERT(heap.Count() == (uint32_t)counti);
+					MG_COMMON_ASSERT_F(heap.Count() == (uint32_t)counti, "(Failed)%s]]", testName);
 					for (int i = 0; i < counti; ++i)
 					{
 						pop = nullptr;
-						MG_COMMON_ASSERT(heap.GetTop() == &values[i]);
-						MG_COMMON_ASSERT(heap.Pop(pop));
-						MG_COMMON_ASSERT(pop == &values[i]);
+						MG_COMMON_ASSERT_F(heap.GetTop() == &values[i], "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(pop == &values[i], "(Failed)%s]]", testName);
 					}
-					MG_COMMON_ASSERT(!heap.Pop(pop));
-					MG_COMMON_ASSERT(heap.Count() == 0);
+					MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+					MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 				} while (std::next_permutation(&indexes[0], &indexes[counti]));
 			}
 		}
@@ -232,8 +234,8 @@ namespace unittests {
 			mg::common::BinaryHeapMax<UTBHeapValue> heap;
 			UTBHeapValue pop;
 			pop.myValue = INT_MAX;
-			MG_COMMON_ASSERT(!heap.Pop(pop));
-			MG_COMMON_ASSERT(heap.Count() == 0);
+			MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 			for (int i = 0; i < count; ++i)
 				values[i].myValue = count - 1 - i;
 
@@ -246,16 +248,16 @@ namespace unittests {
 				{
 					for (int i = 0; i < counti; ++i)
 						heap.Push(values[indexes[i]]);
-					MG_COMMON_ASSERT(heap.Count() == (uint32_t)counti);
+					MG_COMMON_ASSERT_F(heap.Count() == (uint32_t)counti, "(Failed)%s]]", testName);
 					for (int i = 0; i < counti; ++i)
 					{
 						pop.myValue = INT_MAX;
-						MG_COMMON_ASSERT(heap.GetTop().myValue == values[i].myValue);
-						MG_COMMON_ASSERT(heap.Pop(pop));
-						MG_COMMON_ASSERT(pop.myValue == values[i].myValue);
+						MG_COMMON_ASSERT_F(heap.GetTop().myValue == values[i].myValue, "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(pop.myValue == values[i].myValue, "(Failed)%s]]", testName);
 					}
-					MG_COMMON_ASSERT(!heap.Pop(pop));
-					MG_COMMON_ASSERT(heap.Count() == 0);
+					MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+					MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 				} while (std::next_permutation(&indexes[0], &indexes[counti]));
 			}
 		}
@@ -263,8 +265,8 @@ namespace unittests {
 			mg::common::BinaryHeapMin<UTBHeapValue> heap;
 			UTBHeapValue pop;
 			pop.myValue = INT_MAX;
-			MG_COMMON_ASSERT(!heap.Pop(pop));
-			MG_COMMON_ASSERT(heap.Count() == 0);
+			MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 			for (int i = 0; i < count; ++i)
 				values[i].myValue = i;
 
@@ -277,16 +279,16 @@ namespace unittests {
 				{
 					for (int i = 0; i < counti; ++i)
 						heap.Push(values[indexes[i]]);
-					MG_COMMON_ASSERT(heap.Count() == (uint32_t)counti);
+					MG_COMMON_ASSERT_F(heap.Count() == (uint32_t)counti, "(Failed)%s]]", testName);
 					for (int i = 0; i < counti; ++i)
 					{
 						pop.myValue = INT_MAX;
-						MG_COMMON_ASSERT(heap.GetTop().myValue == values[i].myValue);
-						MG_COMMON_ASSERT(heap.Pop(pop));
-						MG_COMMON_ASSERT(pop.myValue == values[i].myValue);
+						MG_COMMON_ASSERT_F(heap.GetTop().myValue == values[i].myValue, "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(pop.myValue == values[i].myValue, "(Failed)%s]]", testName);
 					}
-					MG_COMMON_ASSERT(!heap.Pop(pop));
-					MG_COMMON_ASSERT(heap.Count() == 0);
+					MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+					MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 				} while (std::next_permutation(&indexes[0], &indexes[counti]));
 			}
 		}
@@ -294,8 +296,8 @@ namespace unittests {
 			mg::common::BinaryHeapMin<UTBHeapValue> heap;
 			UTBHeapValue pop;
 			pop.myValue = INT_MAX;
-			MG_COMMON_ASSERT(!heap.Pop(pop));
-			MG_COMMON_ASSERT(heap.Count() == 0);
+			MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 
 			for (int counti = 1; counti <= count; ++counti)
 			{
@@ -314,16 +316,16 @@ namespace unittests {
 						heap.GetTop().myValue = indexes[i];
 						heap.UpdateTop();
 					}
-					MG_COMMON_ASSERT(heap.Count() == (uint32_t)counti);
+					MG_COMMON_ASSERT_F(heap.Count() == (uint32_t)counti, "(Failed)%s]]", testName);
 					for (int i = 0; i < counti; ++i)
 					{
 						pop.myValue = INT_MAX;
-						MG_COMMON_ASSERT(heap.GetTop().myValue == i);
-						MG_COMMON_ASSERT(heap.Pop(pop));
-						MG_COMMON_ASSERT(pop.myValue == i);
+						MG_COMMON_ASSERT_F(heap.GetTop().myValue == i, "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(pop.myValue == i, "(Failed)%s]]", testName);
 					}
-					MG_COMMON_ASSERT(!heap.Pop(pop));
-					MG_COMMON_ASSERT(heap.Count() == 0);
+					MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+					MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 				} while (std::next_permutation(&indexes[0], &indexes[counti]));
 			}
 		}
@@ -349,21 +351,21 @@ namespace unittests {
 						}
 						values[srci].myValue = newv;
 						heap.Update(&values[srci]);
-						MG_COMMON_ASSERT(values[srci].myIndex >= 0);
-						MG_COMMON_ASSERT(values[srci].myIndex < counti);
+						MG_COMMON_ASSERT_F(values[srci].myIndex >= 0, "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(values[srci].myIndex < counti, "(Failed)%s]]", testName);
 						int prev = -1;
 						for (int i = 0; i < counti; ++i)
 						{
 							pop = nullptr;
-							MG_COMMON_ASSERT(heap.Pop(pop));
-							MG_COMMON_ASSERT(pop->myIndex == -1);
-							MG_COMMON_ASSERT(pop->myValue >= prev);
-							MG_COMMON_ASSERT(pop->myValue >= 0);
+							MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+							MG_COMMON_ASSERT_F(pop->myIndex == -1, "(Failed)%s]]", testName);
+							MG_COMMON_ASSERT_F(pop->myValue >= prev, "(Failed)%s]]", testName);
+							MG_COMMON_ASSERT_F(pop->myValue >= 0, "(Failed)%s]]", testName);
 							prev = pop->myValue;
 							pop->myValue = -1;
 						}
-						MG_COMMON_ASSERT(!heap.Pop(pop));
-						MG_COMMON_ASSERT(heap.Count() == 0);
+						MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 					}
 				}
 			}
@@ -387,20 +389,20 @@ namespace unittests {
 					}
 					values[srci].myValue = INT_MAX;
 					heap.Remove(&values[srci]);
-					MG_COMMON_ASSERT(values[srci].myIndex == -1);
+					MG_COMMON_ASSERT_F(values[srci].myIndex == -1, "(Failed)%s]]", testName);
 					int prev = INT_MAX;
 					for (int i = 1; i < counti; ++i)
 					{
 						pop = nullptr;
-						MG_COMMON_ASSERT(heap.Pop(pop));
-						MG_COMMON_ASSERT(pop->myIndex == -1);
-						MG_COMMON_ASSERT(pop->myValue < prev);
-						MG_COMMON_ASSERT(pop->myValue >= 0);
+						MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(pop->myIndex == -1, "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(pop->myValue < prev, "(Failed)%s]]", testName);
+						MG_COMMON_ASSERT_F(pop->myValue >= 0, "(Failed)%s]]", testName);
 						prev = pop->myValue;
 						pop->myValue = -1;
 					}
-					MG_COMMON_ASSERT(!heap.Pop(pop));
-					MG_COMMON_ASSERT(heap.Count() == 0);
+					MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+					MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 				}
 			}
 		}
@@ -408,21 +410,24 @@ namespace unittests {
 			// Check reservation.
 			mg::common::BinaryHeapMaxIntrusive<UTBHeapValue> heap;
 			heap.Reserve(1);
-			MG_COMMON_ASSERT(heap.GetCapacity() >= 1);
+			MG_COMMON_ASSERT_F(heap.GetCapacity() >= 1, "(Failed)%s]]", testName);
 			heap.Reserve(100);
-			MG_COMMON_ASSERT(heap.GetCapacity() >= 100);
+			MG_COMMON_ASSERT_F(heap.GetCapacity() >= 100, "(Failed)%s]]", testName);
 		}
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestBinaryHeapPushPop()
 	{
+		const char* testName = "BinaryHeapPushPop";
 		UTBHeapValue::ResetCounters();
 		{
 			mg::common::BinaryHeapMax<UTBHeapValue> heap;
 			// No static elements are created.
 		}
-		UTBHeapValue::CheckCounters();
+		UTBHeapValue::CheckCounters(testName);
 		{
 			UTBHeapValue v1;
 			UTBHeapValue v2;
@@ -435,84 +440,87 @@ namespace unittests {
 			v4.myValue = 4;
 			mg::common::BinaryHeapMax<UTBHeapValue> heap;
 			heap.Reserve(10);
-			UTBHeapValue::UseConstrCount(5);
+			UTBHeapValue::UseConstrCount(5, testName);
 
 			heap.Push(v1);
-			UTBHeapValue::UseCopyConstrCount(1);
+			UTBHeapValue::UseCopyConstrCount(1, testName);
 
 			heap.Push(v2);
 			// Copy the new value to the end.
-			UTBHeapValue::UseCopyConstrCount(1);
+			UTBHeapValue::UseCopyConstrCount(1, testName);
 			// It should be on top, so moving procedure is
 			// started. A temporary object with the new value is
 			// created for that.
-			UTBHeapValue::UseMoveConstrCount(1);
+			UTBHeapValue::UseMoveConstrCount(1, testName);
 			// Move current top down.
-			UTBHeapValue::UseMoveAssignCount(1);
+			UTBHeapValue::UseMoveAssignCount(1, testName);
 			// Move the new value to the top.
-			UTBHeapValue::UseMoveAssignCount(1);
+			UTBHeapValue::UseMoveAssignCount(1, testName);
 			// Temporary object is deleted.
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseDestrCount(1, testName);
 
 			heap.Push(v3);
 			// The same. Because the value 2 stays in place.
-			UTBHeapValue::UseCopyConstrCount(1);
-			UTBHeapValue::UseMoveConstrCount(1);
-			UTBHeapValue::UseMoveAssignCount(2);
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseCopyConstrCount(1, testName);
+			UTBHeapValue::UseMoveConstrCount(1, testName);
+			UTBHeapValue::UseMoveAssignCount(2, testName);
+			UTBHeapValue::UseDestrCount(1, testName);
 
 			heap.Push(v4);
 			// The same but +1 move, because the new element goes
 			// up two times.
-			UTBHeapValue::UseCopyConstrCount(1);
-			UTBHeapValue::UseMoveConstrCount(1);
-			UTBHeapValue::UseMoveAssignCount(3);
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseCopyConstrCount(1, testName);
+			UTBHeapValue::UseMoveConstrCount(1, testName);
+			UTBHeapValue::UseMoveAssignCount(3, testName);
+			UTBHeapValue::UseDestrCount(1, testName);
 
-			MG_COMMON_ASSERT(heap.Pop(pop));
+			MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
 			// Return result.
-			UTBHeapValue::UseMoveAssignCount(1);
+			UTBHeapValue::UseMoveAssignCount(1, testName);
 			// Move the rightmost value to the root to start its
 			// way down.
-			UTBHeapValue::UseMoveAssignCount(1);
+			UTBHeapValue::UseMoveAssignCount(1, testName);
 			// Move down requires to create one temporary
 			// variable.
-			UTBHeapValue::UseMoveConstrCount(1);
+			UTBHeapValue::UseMoveConstrCount(1, testName);
 			// The new root goes down 2 times.
-			UTBHeapValue::UseMoveAssignCount(2);
+			UTBHeapValue::UseMoveAssignCount(2, testName);
 			// Temporary variable is deleted.
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseDestrCount(1, testName);
 			// Removed element is destroyed in the heap.
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseDestrCount(1, testName);
 
-			MG_COMMON_ASSERT(heap.Pop(pop));
+			MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
 			// The tree becomes 2 level - root and 2 children. So
 			// one move to return the old root, and one move to
 			// set a new root to one of the children.
-			UTBHeapValue::UseMoveAssignCount(2);
+			UTBHeapValue::UseMoveAssignCount(2, testName);
 			// Removed element is destroyed in the heap.
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseDestrCount(1, testName);
 
-			MG_COMMON_ASSERT(heap.Pop(pop));
+			MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
 			// The same.
-			UTBHeapValue::UseMoveAssignCount(2);
+			UTBHeapValue::UseMoveAssignCount(2, testName);
 			// Removed element is destroyed in the heap.
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseDestrCount(1, testName);
 
-			MG_COMMON_ASSERT(heap.Pop(pop));
+			MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
 			// Move the single value to the out parameter.
-			UTBHeapValue::UseMoveAssignCount(1);
+			UTBHeapValue::UseMoveAssignCount(1, testName);
 			// Removed element is destroyed in the heap.
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseDestrCount(1, testName);
 		}
 		// Stack variables are destroyed.
-		UTBHeapValue::UseDestrCount(5);
-		UTBHeapValue::CheckCounters();
+		UTBHeapValue::UseDestrCount(5, testName);
+		UTBHeapValue::CheckCounters(testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestBinaryHeapUpdateTop()
 	{
+		const char* testName = "BinaryHeapUpdateTop";
 		{
 			UTBHeapValue v1;
 			UTBHeapValue v2;
@@ -535,37 +543,37 @@ namespace unittests {
 			heap.UpdateTop();
 			// Need to go down. The root is saved to a temporary
 			// variable.
-			UTBHeapValue::UseMoveConstrCount(1);
+			UTBHeapValue::UseMoveConstrCount(1, testName);
 			// Two elements are moved up to fill the root.
-			UTBHeapValue::UseMoveAssignCount(2);
+			UTBHeapValue::UseMoveAssignCount(2, testName);
 			// One move to put the saved value to the end from the
 			// temporary variable.
-			UTBHeapValue::UseMoveAssignCount(1);
+			UTBHeapValue::UseMoveAssignCount(1, testName);
 			// Temporary variable is deleted.
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseDestrCount(1, testName);
 
-			UTBHeapValue::CheckCounters();
+			UTBHeapValue::CheckCounters(testName);
 			heap.Pop(pop);
 			UTBHeapValue::ResetCounters();
 			heap.GetTop().myValue = -1;
 			heap.UpdateTop();
 			// Single swap via a temporary variable, since there
 			// is just 1 level left.
-			UTBHeapValue::UseMoveConstrCount(1);
-			UTBHeapValue::UseMoveAssignCount(2);
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseMoveConstrCount(1, testName);
+			UTBHeapValue::UseMoveAssignCount(2, testName);
+			UTBHeapValue::UseDestrCount(1, testName);
 
-			UTBHeapValue::CheckCounters();
+			UTBHeapValue::CheckCounters(testName);
 			heap.Pop(pop);
 			UTBHeapValue::ResetCounters();
 			heap.GetTop().myValue = -2;
 			heap.UpdateTop();
 			// The same.
-			UTBHeapValue::UseMoveConstrCount(1);
-			UTBHeapValue::UseMoveAssignCount(2);
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseMoveConstrCount(1, testName);
+			UTBHeapValue::UseMoveAssignCount(2, testName);
+			UTBHeapValue::UseDestrCount(1, testName);
 
-			UTBHeapValue::CheckCounters();
+			UTBHeapValue::CheckCounters(testName);
 			heap.Pop(pop);
 			UTBHeapValue::ResetCounters();
 			heap.GetTop().myValue = -3;
@@ -574,13 +582,16 @@ namespace unittests {
 			// have elements to reorder with.
 		}
 		// 5 from the stack and 1 in the heap.
-		UTBHeapValue::UseDestrCount(6);
-		UTBHeapValue::CheckCounters();
+		UTBHeapValue::UseDestrCount(6, testName);
+		UTBHeapValue::CheckCounters(testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestBinaryHeapUpdateAny()
 	{
+		const char* testName = "BinaryHeapUpdateAny";
 		mg::common::BinaryHeapMinIntrusive<UTBHeapValue> heap;
 		heap.Reserve(10);
 
@@ -590,32 +601,32 @@ namespace unittests {
 		UTBHeapValue v4;
 		v1.myValue = 0;
 		heap.Push(&v1);
-		MG_COMMON_ASSERT(v1.myIndex == 0);
+		MG_COMMON_ASSERT_F(v1.myIndex == 0, "(Failed)%s]]", testName);
 
 		heap.Update(&v1);
-		MG_COMMON_ASSERT(v1.myIndex == 0);
+		MG_COMMON_ASSERT_F(v1.myIndex == 0, "(Failed)%s]]", testName);
 
 		v2.myValue = 1;
 		heap.Push(&v2);
-		MG_COMMON_ASSERT(v2.myIndex == 1);
+		MG_COMMON_ASSERT_F(v2.myIndex == 1, "(Failed)%s]]", testName);
 		heap.Update(&v1);
 		heap.Update(&v2);
 
 		v2.myValue = -1;
 		heap.Update(&v2);
-		MG_COMMON_ASSERT(v2.myIndex == 0);
-		MG_COMMON_ASSERT(v1.myIndex == 1);
+		MG_COMMON_ASSERT_F(v2.myIndex == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v1.myIndex == 1, "(Failed)%s]]", testName);
 
 		UTBHeapValue* pop = nullptr;
-		MG_COMMON_ASSERT(heap.Pop(pop));
-		MG_COMMON_ASSERT(pop->myIndex == -1);
-		MG_COMMON_ASSERT(pop == &v2);
-		MG_COMMON_ASSERT(v1.myIndex == 0);
+		MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop->myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v1.myIndex == 0, "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(heap.Pop(pop));
-		MG_COMMON_ASSERT(pop->myIndex == -1);
-		MG_COMMON_ASSERT(pop == &v1);
-		MG_COMMON_ASSERT(!heap.Pop(pop));
+		MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop->myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
 
 		v1.myValue = 0;
 		v2.myValue = 1;
@@ -625,46 +636,49 @@ namespace unittests {
 		heap.Push(&v2);
 		heap.Push(&v3);
 		heap.Push(&v4);
-		MG_COMMON_ASSERT(v1.myIndex == 0);
-		MG_COMMON_ASSERT(v2.myIndex == 1);
-		MG_COMMON_ASSERT(v3.myIndex == 2);
-		MG_COMMON_ASSERT(v4.myIndex == 3);
+		MG_COMMON_ASSERT_F(v1.myIndex == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v2.myIndex == 1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v3.myIndex == 2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v4.myIndex == 3, "(Failed)%s]]", testName);
 
 		v4.myValue = -4;
 		heap.Update(&v4);
-		MG_COMMON_ASSERT(v4.myIndex == 0);
+		MG_COMMON_ASSERT_F(v4.myIndex == 0, "(Failed)%s]]", testName);
 
 		v3.myValue = -3;
 		heap.Update(&v3);
-		MG_COMMON_ASSERT(v3.myIndex == 2);
+		MG_COMMON_ASSERT_F(v3.myIndex == 2, "(Failed)%s]]", testName);
 
 		v2.myValue = -2;
 		heap.Update(&v2);
-		MG_COMMON_ASSERT(v2.myIndex == 1);
+		MG_COMMON_ASSERT_F(v2.myIndex == 1, "(Failed)%s]]", testName);
 
 		v1.myValue = -1;
 		heap.Update(&v1);
-		MG_COMMON_ASSERT(v1.myIndex == 3);
+		MG_COMMON_ASSERT_F(v1.myIndex == 3, "(Failed)%s]]", testName);
 
 		pop = nullptr;
-		MG_COMMON_ASSERT(heap.Pop(pop));
-		MG_COMMON_ASSERT(pop->myIndex == -1);
-		MG_COMMON_ASSERT(pop == &v4);
-		MG_COMMON_ASSERT(heap.Pop(pop));
-		MG_COMMON_ASSERT(pop->myIndex == -1);
-		MG_COMMON_ASSERT(pop == &v3);
-		MG_COMMON_ASSERT(heap.Pop(pop));
-		MG_COMMON_ASSERT(pop->myIndex == -1);
-		MG_COMMON_ASSERT(pop == &v2);
-		MG_COMMON_ASSERT(heap.Pop(pop));
-		MG_COMMON_ASSERT(pop->myIndex == -1);
-		MG_COMMON_ASSERT(pop == &v1);
-		MG_COMMON_ASSERT(!heap.Pop(pop));
+		MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop->myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop == &v4, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop->myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop == &v3, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop->myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop->myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!heap.Pop(pop), "(Failed)%s]]", testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestBinaryHeapRemoveTop()
 	{
+		const char* testName = "BinaryHeapRemoveTop";
 		{
 			UTBHeapValue v1;
 			UTBHeapValue v2;
@@ -681,44 +695,47 @@ namespace unittests {
 
 			// NOP on empty.
 			heap.RemoveTop();
-			MG_COMMON_ASSERT(heap.Count() == 0);
+			MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 
 			// Single element remove does not copy nor move
 			// anything.
 			heap.Push(v1);
-			MG_COMMON_ASSERT(heap.Count() == 1);
-			UTBHeapValue::UseCopyConstrCount(1);
+			MG_COMMON_ASSERT_F(heap.Count() == 1, "(Failed)%s]]", testName);
+			UTBHeapValue::UseCopyConstrCount(1, testName);
 			heap.RemoveTop();
-			UTBHeapValue::UseDestrCount(1);
-			MG_COMMON_ASSERT(heap.Count() == 0);
-			UTBHeapValue::CheckCounters();
+			UTBHeapValue::UseDestrCount(1, testName);
+			MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
+			UTBHeapValue::CheckCounters(testName);
 
 			// Remove() costs less than Pop().
 			heap.Push(v1);
 			heap.Push(v2);
 			heap.Push(v3);
 			heap.Push(v4);
-			MG_COMMON_ASSERT(heap.Count() == 4);
+			MG_COMMON_ASSERT_F(heap.Count() == 4, "(Failed)%s]]", testName);
 			UTBHeapValue::ResetCounters();
 			heap.RemoveTop();
 			// Move end to the deleted root.
-			UTBHeapValue::UseMoveAssignCount(1);
+			UTBHeapValue::UseMoveAssignCount(1, testName);
 			// Single moving down is required and is done via a
 			// swap using a temporary variable.
-			UTBHeapValue::UseMoveConstrCount(1);
-			UTBHeapValue::UseMoveAssignCount(2);
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseMoveConstrCount(1, testName);
+			UTBHeapValue::UseMoveAssignCount(2, testName);
+			UTBHeapValue::UseDestrCount(1, testName);
 			// The removed element is destroyed in the heap.
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseDestrCount(1, testName);
 		}
 		// 5 from the stack, 3 from the heap.
-		UTBHeapValue::UseDestrCount(8);
-		UTBHeapValue::CheckCounters();
+		UTBHeapValue::UseDestrCount(8, testName);
+		UTBHeapValue::CheckCounters(testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestBinaryHeapRemoveAny()
 	{
+		const char* testName = "BinaryHeapRemoveAny";
 		mg::common::BinaryHeapMinIntrusive<UTBHeapValue> heap;
 		heap.Reserve(10);
 
@@ -728,24 +745,24 @@ namespace unittests {
 		UTBHeapValue v4;
 		v1.myValue = 0;
 		heap.Push(&v1);
-		MG_COMMON_ASSERT(v1.myIndex == 0);
+		MG_COMMON_ASSERT_F(v1.myIndex == 0, "(Failed)%s]]", testName);
 
 		heap.Remove(&v1);
-		MG_COMMON_ASSERT(v1.myIndex == -1);
-		MG_COMMON_ASSERT(heap.Count() == 0);
+		MG_COMMON_ASSERT_F(v1.myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 
 		v2.myValue = 1;
 		heap.Push(&v1);
 		heap.Push(&v2);
 
 		heap.Remove(&v1);
-		MG_COMMON_ASSERT(v1.myIndex == -1);
-		MG_COMMON_ASSERT(v2.myIndex == 0);
-		MG_COMMON_ASSERT(heap.Count() == 1);
+		MG_COMMON_ASSERT_F(v1.myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v2.myIndex == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(heap.Count() == 1, "(Failed)%s]]", testName);
 
 		heap.Remove(&v2);
-		MG_COMMON_ASSERT(v2.myIndex == -1);
-		MG_COMMON_ASSERT(heap.Count() == 0);
+		MG_COMMON_ASSERT_F(v2.myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
 
 		v1.myValue = 0;
 		v2.myValue = 1;
@@ -755,34 +772,37 @@ namespace unittests {
 		heap.Push(&v2);
 		heap.Push(&v3);
 		heap.Push(&v4);
-		MG_COMMON_ASSERT(v1.myIndex == 0);
-		MG_COMMON_ASSERT(v2.myIndex == 1);
-		MG_COMMON_ASSERT(v3.myIndex == 2);
-		MG_COMMON_ASSERT(v4.myIndex == 3);
+		MG_COMMON_ASSERT_F(v1.myIndex == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v2.myIndex == 1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v3.myIndex == 2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v4.myIndex == 3, "(Failed)%s]]", testName);
 
 		heap.Remove(&v1);
-		MG_COMMON_ASSERT(v1.myIndex == -1);
-		MG_COMMON_ASSERT(v2.myIndex == 0);
-		MG_COMMON_ASSERT(v3.myIndex == 2);
-		MG_COMMON_ASSERT(v4.myIndex == 1);
+		MG_COMMON_ASSERT_F(v1.myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v2.myIndex == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v3.myIndex == 2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v4.myIndex == 1, "(Failed)%s]]", testName);
 
 		heap.Remove(&v2);
-		MG_COMMON_ASSERT(v2.myIndex == -1);
-		MG_COMMON_ASSERT(v3.myIndex == 0);
-		MG_COMMON_ASSERT(v4.myIndex == 1);
+		MG_COMMON_ASSERT_F(v2.myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v3.myIndex == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v4.myIndex == 1, "(Failed)%s]]", testName);
 
 		heap.Remove(&v3);
-		MG_COMMON_ASSERT(v3.myIndex == -1);
-		MG_COMMON_ASSERT(v4.myIndex == 0);
+		MG_COMMON_ASSERT_F(v3.myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v4.myIndex == 0, "(Failed)%s]]", testName);
 
 		heap.Remove(&v4);
-		MG_COMMON_ASSERT(v4.myIndex == -1);
-		MG_COMMON_ASSERT(heap.Count() == 0);
+		MG_COMMON_ASSERT_F(v4.myIndex == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(heap.Count() == 0, "(Failed)%s]]", testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestBinaryHeapIndexName()
 	{
+		const char* testName = "BinaryHeapIndexName";
 		// Can use a non-default index name.
 		struct TestValue
 		{
@@ -806,34 +826,37 @@ namespace unittests {
 		v2.myIdx = -1;
 		heap.Push(&v1);
 		heap.Push(&v2);
-		MG_COMMON_ASSERT(v1.myIdx == 0);
-		MG_COMMON_ASSERT(v2.myIdx == 1);
+		MG_COMMON_ASSERT_F(v1.myIdx == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v2.myIdx == 1, "(Failed)%s]]", testName);
 		TestValue* pop = nullptr;
-		MG_COMMON_ASSERT(heap.Pop(pop));
-		MG_COMMON_ASSERT(pop->myIdx == -1);
-		MG_COMMON_ASSERT(pop == &v1);
-		MG_COMMON_ASSERT(heap.Pop(pop));
-		MG_COMMON_ASSERT(pop->myIdx == -1);
-		MG_COMMON_ASSERT(pop == &v2);
+		MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop->myIdx == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(heap.Pop(pop), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop->myIdx == -1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(pop == &v2, "(Failed)%s]]", testName);
 
 		heap.Push(&v1);
 		heap.Push(&v2);
 		v2.myValue = 0;
 		heap.Update(&v2);
-		MG_COMMON_ASSERT(v1.myIdx == 1);
-		MG_COMMON_ASSERT(v2.myIdx == 0);
+		MG_COMMON_ASSERT_F(v1.myIdx == 1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v2.myIdx == 0, "(Failed)%s]]", testName);
 
 		heap.Remove(&v2);
-		MG_COMMON_ASSERT(v1.myIdx == 0);
-		MG_COMMON_ASSERT(v2.myIdx == -1);
+		MG_COMMON_ASSERT_F(v1.myIdx == 0, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v2.myIdx == -1, "(Failed)%s]]", testName);
 
 		heap.Remove(&v1);
-		MG_COMMON_ASSERT(v1.myIdx == -1);
+		MG_COMMON_ASSERT_F(v1.myIdx == -1, "(Failed)%s]]", testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestBinaryHeapRealloc()
 	{
+		const char* testName = "BinaryHeapRealloc";
 		{
 			mg::common::BinaryHeapMin<UTBHeapValue> heap;
 			UTBHeapValue v;
@@ -844,30 +867,32 @@ namespace unittests {
 			v.myValue = 2;
 			heap.Push(v);
 			// Old value move as a result of realloc.
-			UTBHeapValue::UseMoveConstrCount(1);
+			UTBHeapValue::UseMoveConstrCount(1, testName);
 			// Old location destruction.
-			UTBHeapValue::UseDestrCount(1);
+			UTBHeapValue::UseDestrCount(1, testName);
 			// New value copy.
-			UTBHeapValue::UseCopyConstrCount(1);
+			UTBHeapValue::UseCopyConstrCount(1, testName);
 
 			v.myValue = 3;
 			heap.Push(v);
 			// Old values move as a result of realloc.
-			UTBHeapValue::UseMoveConstrCount(2);
+			UTBHeapValue::UseMoveConstrCount(2, testName);
 			// Old location destruction.
-			UTBHeapValue::UseDestrCount(2);
+			UTBHeapValue::UseDestrCount(2, testName);
 			// New value copy.
-			UTBHeapValue::UseCopyConstrCount(1);
+			UTBHeapValue::UseCopyConstrCount(1, testName);
 #if IS_PLATFORM_WIN
 			// Windows somewhy grows it not always x2.
-			MG_COMMON_ASSERT(heap.GetCapacity() >= 3);
+			MG_COMMON_ASSERT_F(heap.GetCapacity() >= 3, "(Failed)%s]]", testName);
 #else
 			// Grows x2 at least.
-			MG_COMMON_ASSERT(heap.GetCapacity() == 4);
+			MG_COMMON_ASSERT_F(heap.GetCapacity() == 4, "(Failed)%s]]", testName);
 #endif
 		}
-		UTBHeapValue::UseDestrCount(4);
-		UTBHeapValue::CheckCounters();
+		UTBHeapValue::UseDestrCount(4, testName);
+		UTBHeapValue::CheckCounters(testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	void

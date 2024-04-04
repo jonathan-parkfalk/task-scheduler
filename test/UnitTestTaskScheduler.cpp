@@ -14,7 +14,7 @@ namespace unittests {
 	UnitTestTaskSchedulerBasic()
 	{
 		TestCaseGuard guard("Basic");
-
+		const char* testName = "SchedulerBasic";
 		mg::serverbox::TaskScheduler sched("tst", 1, 5);
 		mg::serverbox::TaskCallback cb;
 		mg::serverbox::Task* tp;
@@ -23,8 +23,8 @@ namespace unittests {
 		// Simple test for a task being executed 3 times.
 		progress.StoreRelaxed(0);
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask == tp);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask == tp, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			if (progress.IncrementFetchRelaxed() < 3)
 				sched.Post(aTask);
 		};
@@ -38,9 +38,9 @@ namespace unittests {
 		uint64_t timestamp = mg::common::GetMilliseconds();
 		progress.StoreRelaxed(false);
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask == tp);
-			MG_COMMON_ASSERT(aTask->IsExpired());
-			MG_COMMON_ASSERT(mg::common::GetMilliseconds() >= timestamp + 5);
+			MG_COMMON_ASSERT_F(aTask == tp, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(mg::common::GetMilliseconds() >= timestamp + 5, "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		};
 		t.SetCallback(cb);
@@ -53,14 +53,14 @@ namespace unittests {
 		timestamp = 0;
 		progress.StoreRelaxed(false);
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask == tp);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask == tp, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			if (timestamp == 0)
 			{
 				timestamp = mg::common::GetMilliseconds() + 5;
 				return sched.PostDeadline(aTask, timestamp);
 			}
-			MG_COMMON_ASSERT(mg::common::GetMilliseconds() >= timestamp);
+			MG_COMMON_ASSERT_F(mg::common::GetMilliseconds() >= timestamp, "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		};
 		t.SetCallback(cb);
@@ -72,8 +72,8 @@ namespace unittests {
 		progress.StoreRelaxed(false);
 		tp = new mg::serverbox::Task();
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask == tp);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask == tp, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 			delete aTask;
 		};
@@ -90,13 +90,14 @@ namespace unittests {
 		sched.Post(tp);
 		while (!progress.LoadRelaxed())
 			mg::common::Sleep(1);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestTaskSchedulerOrder()
 	{
 		TestCaseGuard guard("Order");
-
+		const char* testName = "SchedulerOrder";
 		// Order is never guaranteed in a multi-thread system. But
 		// at least it should be correct when the thread is just
 		// one.
@@ -107,22 +108,22 @@ namespace unittests {
 		mg::serverbox::Task t3;
 		mg::common::AtomicU32 progress(0);
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(progress.LoadRelaxed() == 0);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(progress.LoadRelaxed() == 0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.IncrementRelaxed();
 		};
 		t1.SetCallback(cb);
 
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(progress.LoadRelaxed() == 1);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(progress.LoadRelaxed() == 1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.IncrementRelaxed();
 		};
 		t2.SetCallback(cb);
 
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(progress.LoadRelaxed() == 2);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(progress.LoadRelaxed() == 2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.IncrementRelaxed();
 		};
 		t3.SetCallback(cb);
@@ -133,12 +134,14 @@ namespace unittests {
 
 		while (progress.LoadRelaxed() != 3)
 			mg::common::Sleep(1);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestTaskSchedulerDomino()
 	{
 		TestCaseGuard guard("Domino");
+		const char* testName = "SchedulerDomino";
 
 		// Ensure all the workers wakeup each other if necessary.
 		// The test is called 'domino', because the worker threads
@@ -151,7 +154,7 @@ namespace unittests {
 		mg::common::AtomicU32 progress(0);
 		mg::common::AtomicBool finish(false);
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.IncrementRelaxed();
 			while (!finish.LoadAcquire())
 				mg::common::Sleep(1);
@@ -171,12 +174,14 @@ namespace unittests {
 		finish.StoreRelease(true);
 		while (progress.LoadRelaxed() != 3)
 			mg::common::Sleep(1);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestTaskSchedulerWakeup()
 	{
 		TestCaseGuard guard("Wakeup");
+		const char* testName = "SchedulerWakeup";
 
 		mg::serverbox::TaskScheduler sched("tst", 1, 5);
 		mg::serverbox::TaskCallback cb;
@@ -247,7 +252,7 @@ namespace unittests {
 				// PostWait(), because the signal is still active.
 				while (progress.LoadRelaxed() != 2)
 					mg::common::Sleep(1);
-				MG_COMMON_ASSERT(aTask->ReceiveSignal());
+				MG_COMMON_ASSERT_F(aTask->ReceiveSignal(), "(Failed)%s]]", testName);
 				return sched.PostWait(aTask);
 			}
 			progress.StoreRelaxed(3);
@@ -261,19 +266,21 @@ namespace unittests {
 		sched.Wakeup(&t1);
 		progress.StoreRelaxed(2);
 		mg::common::Sleep(1);
-		MG_COMMON_ASSERT(progress.LoadRelaxed() == 2);
+		MG_COMMON_ASSERT_F(progress.LoadRelaxed() == 2, "(Failed)%s]]", testName);
 		while (t1.IsSignaled())
 			mg::common::Sleep(1);
 
 		sched.Wakeup(&t1);
 		while (progress.LoadRelaxed() != 3)
 			mg::common::Sleep(1);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestTaskSchedulerExpiration()
 	{
 		TestCaseGuard guard("Expiration");
+		const char* testName = "SchedulerExpiration";
 
 		mg::serverbox::TaskScheduler sched("tst", 1, 100);
 		mg::serverbox::Task t1;
@@ -283,8 +290,8 @@ namespace unittests {
 		// deadline.
 		progress.StoreRelaxed(false);
 		t1.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(!aTask->ReceiveSignal());
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(!aTask->ReceiveSignal(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		});
 		sched.Post(&t1);
@@ -307,8 +314,8 @@ namespace unittests {
 		// Expiration check for woken task having a deadline.
 		progress.StoreRelaxed(false);
 		t1.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(!aTask->ReceiveSignal());
-			MG_COMMON_ASSERT(!aTask->IsExpired());
+			MG_COMMON_ASSERT_F(!aTask->ReceiveSignal(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		});
 		sched.Wakeup(&t1);
@@ -320,8 +327,8 @@ namespace unittests {
 		// deadline.
 		progress.StoreRelaxed(false);
 		t1.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask->ReceiveSignal());
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask->ReceiveSignal(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		});
 		sched.Signal(&t1);
@@ -332,8 +339,8 @@ namespace unittests {
 		// Expiration check for signaled task having a deadline.
 		progress.StoreRelaxed(false);
 		t1.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask->ReceiveSignal());
-			MG_COMMON_ASSERT(!aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask->ReceiveSignal(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		});
 		sched.Signal(&t1);
@@ -345,8 +352,8 @@ namespace unittests {
 		// wait.
 		progress.StoreRelaxed(false);
 		t1.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(!aTask->ReceiveSignal());
-			MG_COMMON_ASSERT(!aTask->IsExpired());
+			MG_COMMON_ASSERT_F(!aTask->ReceiveSignal(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		});
 		sched.Wakeup(&t1);
@@ -358,8 +365,8 @@ namespace unittests {
 		// infinite wait.
 		progress.StoreRelaxed(false);
 		t1.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask->ReceiveSignal());
-			MG_COMMON_ASSERT(!aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask->ReceiveSignal(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		});
 		sched.Signal(&t1);
@@ -370,27 +377,29 @@ namespace unittests {
 		// Deadline adjustment.
 		progress.StoreRelaxed(false);
 		t1.SetDeadline(MG_DEADLINE_INFINITE);
-		MG_COMMON_ASSERT(t1.GetDeadline() == MG_DEADLINE_INFINITE);
+		MG_COMMON_ASSERT_F(t1.GetDeadline() == MG_DEADLINE_INFINITE, "(Failed)%s]]", testName);
 		t1.AdjustDeadline(1);
-		MG_COMMON_ASSERT(t1.GetDeadline() == 1);
+		MG_COMMON_ASSERT_F(t1.GetDeadline() == 1, "(Failed)%s]]", testName);
 		t1.AdjustDeadline(MG_DEADLINE_INFINITE);
-		MG_COMMON_ASSERT(t1.GetDeadline() == 1);
+		MG_COMMON_ASSERT_F(t1.GetDeadline() == 1, "(Failed)%s]]", testName);
 		t1.AdjustDelay(1000000);
 		// Does not adjust to a bigger value.
-		MG_COMMON_ASSERT(t1.GetDeadline() == 1);
+		MG_COMMON_ASSERT_F(t1.GetDeadline() == 1, "(Failed)%s]]", testName);
 		t1.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		});
 		sched.Post(&t1);
 		while (!progress.LoadRelaxed())
 			mg::common::Sleep(1);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestTaskSchedulerReschedule()
 	{
 		TestCaseGuard guard("Reschedule");
+		const char* testName = "SchedulerReschedule";
 
 		mg::serverbox::TaskScheduler sched1("tst1", 2, 100);
 		mg::serverbox::TaskScheduler sched2("tst2", 2, 100);
@@ -402,16 +411,16 @@ namespace unittests {
 		// A task can schedule another task into the same or
 		// different scheduler.
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask == &t1);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask == &t1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			sched1.Post(&t2);
 			progress.IncrementRelaxed();
 		};
 		t1.SetCallback(cb);
 
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask == &t2);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask == &t2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			sched2.Post(&t3);
 			progress.IncrementRelaxed();
 		};
@@ -419,8 +428,8 @@ namespace unittests {
 		t2.SetDelay(3);
 
 		cb = [&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask == &t3);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask == &t3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			progress.IncrementRelaxed();
 		};
 		t3.SetCallback(cb);
@@ -436,10 +445,10 @@ namespace unittests {
 		// again.
 		progress.StoreRelaxed(false);
 		t1.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask == &t1);
-			MG_COMMON_ASSERT(aTask->IsExpired());
+			MG_COMMON_ASSERT_F(aTask == &t1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 			if (progress.ExchangeRelaxed(true))
-				MG_COMMON_ASSERT(aTask->ReceiveSignal());
+				MG_COMMON_ASSERT_F(aTask->ReceiveSignal(), "(Failed)%s]]", testName);
 		});
 		sched1.Post(&t1);
 		while (!progress.LoadRelaxed())
@@ -447,7 +456,7 @@ namespace unittests {
 
 		sched1.Signal(&t1);
 		mg::common::Sleep(1);
-		MG_COMMON_ASSERT(t1.IsSignaled());
+		MG_COMMON_ASSERT_F(t1.IsSignaled(), "(Failed)%s]]", testName);
 		sched1.Post(&t1);
 		while (t1.IsSignaled())
 			mg::common::Sleep(1);
@@ -456,11 +465,11 @@ namespace unittests {
 		// task is not executed until posted again.
 		progress.StoreRelaxed(0);
 		t1.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask == &t1);
+			MG_COMMON_ASSERT_F(aTask == &t1, "(Failed)%s]]", testName);
 			if (progress.IncrementFetchRelaxed() != 1)
-				MG_COMMON_ASSERT(!aTask->IsExpired());
+				MG_COMMON_ASSERT_F(!aTask->IsExpired(), "(Failed)%s]]", testName);
 			else
-				MG_COMMON_ASSERT(aTask->IsExpired());
+				MG_COMMON_ASSERT_F(aTask->IsExpired(), "(Failed)%s]]", testName);
 		});
 		sched1.Post(&t1);
 		while (progress.LoadRelaxed() != 1)
@@ -468,16 +477,18 @@ namespace unittests {
 
 		sched1.Wakeup(&t1);
 		mg::common::Sleep(1);
-		MG_COMMON_ASSERT(progress.LoadRelaxed() == 1);
+		MG_COMMON_ASSERT_F(progress.LoadRelaxed() == 1, "(Failed)%s]]", testName);
 		sched1.PostWait(&t1);
 		while (progress.LoadRelaxed() != 2)
 			mg::common::Sleep(1);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestTaskSchedulerSignal()
 	{
 		TestCaseGuard guard("Signal");
+		const char* testName = "SchedulerSignal";
 
 		mg::serverbox::TaskScheduler sched("tst", 1, 2);
 
@@ -505,7 +516,7 @@ namespace unittests {
 		// Signal works for tasks in the front queue.
 		progress.StoreRelaxed(false);
 		t.SetCallback([&](mg::serverbox::Task*) {
-			MG_COMMON_ASSERT(t.ReceiveSignal());
+			MG_COMMON_ASSERT_F(t.ReceiveSignal(), "(Failed)%s]]", testName);
 			progress.StoreRelaxed(true);
 		});
 		sched.PostDeadline(&t, MG_DEADLINE_INFINITE);
@@ -526,7 +537,7 @@ namespace unittests {
 		t.SetCallback([&](mg::serverbox::Task* aTask) {
 			if (!aTask->IsSignaled())
 				return sched.PostWait(aTask);
-			MG_COMMON_ASSERT(aTask->ReceiveSignal());
+			MG_COMMON_ASSERT_F(aTask->ReceiveSignal(), "(Failed)%s]]", testName);
 		});
 		sched.Post(&t);
 		sched.Signal(&t);
@@ -538,8 +549,8 @@ namespace unittests {
 		t.SetCallback([&](mg::serverbox::Task* aTask) {
 			while (!progress.LoadRelaxed())
 				mg::common::Sleep(1);
-			MG_COMMON_ASSERT(aTask->IsSignaled());
-			MG_COMMON_ASSERT(aTask->ReceiveSignal());
+			MG_COMMON_ASSERT_F(aTask->IsSignaled(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->ReceiveSignal(), "(Failed)%s]]", testName);
 		});
 		sched.Post(&t);
 		sched.Signal(&t);
@@ -551,7 +562,7 @@ namespace unittests {
 		// Task is rescheduled until signal is received.
 		progress.StoreRelaxed(0);
 		t.SetCallback([&](mg::serverbox::Task* aTask) {
-			MG_COMMON_ASSERT(aTask->IsSignaled());
+			MG_COMMON_ASSERT_F(aTask->IsSignaled(), "(Failed)%s]]", testName);
 			uint32_t p = progress.IncrementFetchRelaxed();
 			if (p == 1)
 				return sched.PostWait(aTask);
@@ -561,13 +572,14 @@ namespace unittests {
 				return sched.PostDelay(aTask, 1000000);
 			if (p == 4)
 				return sched.Post(aTask);
-			MG_COMMON_ASSERT(aTask->ReceiveSignal());
+			MG_COMMON_ASSERT_F(aTask->ReceiveSignal(), "(Failed)%s]]", testName);
 		});
 		sched.Signal(&t);
 		sched.Post(&t);
 		while (t.IsSignaled())
 			mg::common::Sleep(1);
-		MG_COMMON_ASSERT(progress.LoadRelaxed() == 5);
+		MG_COMMON_ASSERT_F(progress.LoadRelaxed() == 5, "(Failed)%s]]", testName);
+		Report("(Passed)%s]]", testName);
 	}
 
 	struct UTTSchedulerTask;
@@ -579,18 +591,18 @@ namespace unittests {
 			uint32_t aExecuteCount,
 			mg::serverbox::TaskScheduler* aScheduler);
 
-		void CreateHeavy();
+		void CreateHeavy(const char* testName);
 
-		void CreateMicro();
+		void CreateMicro(const char* testName);
 
-		void CreateSignaled();
+		void CreateSignaled(const char* testName);
 
-		void WaitAllExecuted();
+		void WaitAllExecuted(const char* testName);
 
 		void WaitExecuteCount(
 			uint64_t aCount);
 
-		void WaitAllStopped();
+		void WaitAllStopped(const char* testName);
 
 		void PostAll();
 
@@ -616,43 +628,43 @@ namespace unittests {
 
 		void
 		CreateHeavy(
-			UTTSchedulerTaskCtx* aCtx)
+			UTTSchedulerTaskCtx* aCtx, const char* testName)
 		{
 			myExecuteCount = 0;
 			myCtx = aCtx;
 			SetCallback(std::bind(
 				&UTTSchedulerTask::ExecuteHeavy,
-				this, std::placeholders::_1));
+				this, std::placeholders::_1, testName));
 		}
 
 		void
 		CreateMicro(
-			UTTSchedulerTaskCtx* aCtx)
+			UTTSchedulerTaskCtx* aCtx, const char* testName)
 		{
 			myExecuteCount = 0;
 			myCtx = aCtx;
 			SetCallback(std::bind(
 				&UTTSchedulerTask::ExecuteMicro,
-				this, std::placeholders::_1));
+				this, std::placeholders::_1, testName));
 		}
 
 		void
 		CreateSignaled(
-			UTTSchedulerTaskCtx* aCtx)
+			UTTSchedulerTaskCtx* aCtx, const char* testName)
 		{
 			myExecuteCount = 0;
 			myCtx = aCtx;
 			SetCallback(std::bind(
 				&UTTSchedulerTask::ExecuteSignaled, this,
-				std::placeholders::_1));
+				std::placeholders::_1, testName));
 			SetWait();
 		}
 
 		void
 		ExecuteHeavy(
-			mg::serverbox::Task* aTask)
+			mg::serverbox::Task* aTask, const char* testName)
 		{
-			MG_COMMON_ASSERT(aTask == this);
+			MG_COMMON_ASSERT_F(aTask == this, "(Failed)%s]]", testName);
 			aTask->ReceiveSignal();
 			++myExecuteCount;
 			myCtx->myTotalExecuteCount.IncrementRelaxed();
@@ -691,9 +703,9 @@ namespace unittests {
 
 		void
 		ExecuteMicro(
-			mg::serverbox::Task* aTask)
+			mg::serverbox::Task* aTask, const char* testName)
 		{
-			MG_COMMON_ASSERT(aTask == this);
+			MG_COMMON_ASSERT_F(aTask == this, "(Failed)%s]]", testName);
 			++myExecuteCount;
 			myCtx->myTotalExecuteCount.IncrementRelaxed();
 			if (myExecuteCount >= myCtx->myExecuteCount)
@@ -703,11 +715,11 @@ namespace unittests {
 
 		void
 		ExecuteSignaled(
-			mg::serverbox::Task* aTask)
+			mg::serverbox::Task* aTask, const char* testName)
 		{
-			MG_COMMON_ASSERT(aTask == this);
-			MG_COMMON_ASSERT(!aTask->IsExpired());
-			MG_COMMON_ASSERT(aTask->ReceiveSignal());
+			MG_COMMON_ASSERT_F(aTask == this, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!aTask->IsExpired(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(aTask->ReceiveSignal(), "(Failed)%s]]", testName);
 			++myExecuteCount;
 			myCtx->myTotalExecuteCount.IncrementRelaxed();
 			if (myExecuteCount >= myCtx->myExecuteCount)
@@ -741,32 +753,32 @@ namespace unittests {
 	}
 
 	void
-	UTTSchedulerTaskCtx::CreateHeavy()
+	UTTSchedulerTaskCtx::CreateHeavy(const char* testName)
 	{
 		for (uint32_t i = 0; i < myTaskCount; ++i)
-			myTasks[i].CreateHeavy(this);
+			myTasks[i].CreateHeavy(this, testName);
 	}
 
 	void
-	UTTSchedulerTaskCtx::CreateMicro()
+	UTTSchedulerTaskCtx::CreateMicro(const char* testName)
 	{
 		for (uint32_t i = 0; i < myTaskCount; ++i)
-			myTasks[i].CreateMicro(this);
+			myTasks[i].CreateMicro(this,testName);
 	}
 
 	void
-	UTTSchedulerTaskCtx::CreateSignaled()
+	UTTSchedulerTaskCtx::CreateSignaled(const char* testName)
 	{
 		for (uint32_t i = 0; i < myTaskCount; ++i)
-			myTasks[i].CreateSignaled(this);
+			myTasks[i].CreateSignaled(this, testName);
 	}
 
 	void
-	UTTSchedulerTaskCtx::WaitAllExecuted()
+	UTTSchedulerTaskCtx::WaitAllExecuted(const char* testName)
 	{
 		uint64_t total = myExecuteCount * myTaskCount;
 		WaitExecuteCount(total);
-		MG_COMMON_ASSERT(total == myTotalExecuteCount.LoadRelaxed());
+		MG_COMMON_ASSERT_F(total == myTotalExecuteCount.LoadRelaxed(), "(Failed)%s]]", testName);
 	}
 
 	void
@@ -778,12 +790,12 @@ namespace unittests {
 	}
 
 	void
-	UTTSchedulerTaskCtx::WaitAllStopped()
+	UTTSchedulerTaskCtx::WaitAllStopped(const char* testName)
 	{
 		while (myStopCount.LoadRelaxed() != myTaskCount)
 			mg::common::Sleep(1);
 		for (uint32_t i = 0; i < myTaskCount; ++i)
-			MG_COMMON_ASSERT(myTasks[i].myExecuteCount == myExecuteCount);
+			MG_COMMON_ASSERT_F(myTasks[i].myExecuteCount == myExecuteCount, "(Failed)%s]]", testName);
 	}
 
 	void
@@ -822,17 +834,18 @@ namespace unittests {
 		uint32_t aExecuteCount)
 	{
 		TestCaseGuard guard("Batch");
-
+		const char* testName = "SchedulerBatch";
 		Report("Batch test: %u threads, %u tasks, %u executes", aThreadCount, aTaskCount,
 			aExecuteCount);
 		mg::serverbox::TaskScheduler sched("tst", aThreadCount, 5000);
 		UTTSchedulerTaskCtx ctx(aTaskCount, aExecuteCount, &sched);
 
-		ctx.CreateHeavy();
+		ctx.CreateHeavy(testName);
 		ctx.PostAll();
-		ctx.WaitAllStopped();
+		ctx.WaitAllStopped(testName);
 
 		UnitTestTaskSchedulerPrintStat(&sched);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
@@ -841,6 +854,7 @@ namespace unittests {
 		uint32_t aTaskCount)
 	{
 		TestCaseGuard guard("Micro");
+		const char* testName = "TaskSchedulerMicro";
 
 		// Micro test uses super lightweight tasks to check how
 		// fast is the scheduler itself, almost not affected by
@@ -850,15 +864,16 @@ namespace unittests {
 		UTTSchedulerTaskCtx ctx(aTaskCount, 1, &sched);
 		mg::common::QPTimer timer;
 
-		ctx.CreateMicro();
+		ctx.CreateMicro(testName);
 		timer.Start();
 		ctx.PostAll();
-		ctx.WaitAllExecuted();
+		ctx.WaitAllExecuted(testName);
 		double duration = timer.GetMilliSeconds();
 		Report("Duration: %lf ms", duration);
-		ctx.WaitAllStopped();
+		ctx.WaitAllStopped(testName);
 
 		UnitTestTaskSchedulerPrintStat(&sched);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
@@ -867,6 +882,7 @@ namespace unittests {
 		uint32_t aTaskCount)
 	{
 		TestCaseGuard guard("Micro new");
+		const char* testName = "TaskSchedulerMicroNew";
 
 		// Checkout speed of one-shot tasks allocated manually, so
 		// it is -1 virtual call compared to automatic one-shot
@@ -891,6 +907,7 @@ namespace unittests {
 		Report("Duration: %lf ms", duration);
 
 		UnitTestTaskSchedulerPrintStat(&sched);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
@@ -899,6 +916,7 @@ namespace unittests {
 		uint32_t aTaskCount)
 	{
 		TestCaseGuard guard("Micro one shot");
+		const char* testName = "TaskSchedulerMicroOneShot";
 
 		// Checkout speed of one-shot tasks, which are allocated
 		// automatically inside of the scheduler.
@@ -919,6 +937,7 @@ namespace unittests {
 		Report("Duration: %lf ms", duration);
 
 		UnitTestTaskSchedulerPrintStat(&sched);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
@@ -928,6 +947,7 @@ namespace unittests {
 		uint32_t aExecuteCount)
 	{
 		TestCaseGuard guard("Portions");
+		const char* testName = "TaskSchedulerPortions";
 
 		// See what happens when tasks are added in multiple
 		// steps, not in a single sleep-less loop.
@@ -936,17 +956,18 @@ namespace unittests {
 		mg::serverbox::TaskScheduler sched("tst", aThreadCount, 5000);
 		UTTSchedulerTaskCtx ctx(aTaskCount, aExecuteCount, &sched);
 
-		ctx.CreateHeavy();
+		ctx.CreateHeavy(testName);
 		for (uint32_t i = 0; i < aTaskCount; ++i)
 		{
 			sched.Post(&ctx.myTasks[i]);
 			if (i % 10000 == 0)
 				mg::common::Sleep(5);
 		}
-		ctx.WaitAllStopped();
+		ctx.WaitAllStopped(testName);
 
 		Report("Max parallel: %u", ctx.myMaxParallel.LoadRelaxed());
 		UnitTestTaskSchedulerPrintStat(&sched);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
@@ -957,27 +978,29 @@ namespace unittests {
 		uint32_t aDuration)
 	{
 		TestCaseGuard guard("Mild load");
+		const char* testName = "TaskSchedulerMildLoad";
 
 		// Try to simulate load close to reality, when RPS may be
 		// relatively stable, and not millions.
-		MG_COMMON_ASSERT(aTaskCount % aDuration == 0);
+		MG_COMMON_ASSERT_F(aTaskCount % aDuration == 0, "(Failed)%s]]", testName);
 		uint32_t tasksPer50ms = aTaskCount / aDuration * 50;
 		Report("Mild load test: %u threads, %u tasks, %u executes, %u per 50ms",
 			aThreadCount, aTaskCount, aExecuteCount, tasksPer50ms);
 		mg::serverbox::TaskScheduler sched("tst", aThreadCount, 5000);
 		UTTSchedulerTaskCtx ctx(aTaskCount, aExecuteCount, &sched);
 
-		ctx.CreateHeavy();
+		ctx.CreateHeavy(testName);
 		for (uint32_t i = 0; i < aTaskCount; ++i)
 		{
 			sched.Post(&ctx.myTasks[i]);
 			if (i % tasksPer50ms == 0)
 				mg::common::Sleep(50);
 		}
-		ctx.WaitAllStopped();
+		ctx.WaitAllStopped(testName);
 
 		Report("Max parallel: %u", ctx.myMaxParallel.LoadRelaxed());
 		UnitTestTaskSchedulerPrintStat(&sched);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
@@ -985,6 +1008,7 @@ namespace unittests {
 		uint32_t aTaskCount)
 	{
 		TestCaseGuard guard("Timeouts");
+		const char* testName = "TaskSchedulerTimeouts";
 
 		// The test checks how slow is the scheduler on the
 		// slowest case - when tons of tasks are woken up in the
@@ -995,7 +1019,7 @@ namespace unittests {
 		mg::serverbox::TaskScheduler sched("tst", 1, 5000);
 		UTTSchedulerTaskCtx ctx(aTaskCount, 1, &sched);
 
-		ctx.CreateMicro();
+		ctx.CreateMicro(testName);
 		for (uint32_t i = 0; i < aTaskCount; ++i)
 			ctx.myTasks[i].SetDelay(1000000 + i);
 
@@ -1024,13 +1048,14 @@ namespace unittests {
 		// reversed.
 		for (int i = aTaskCount - 1; i >= 0; --i)
 			sched.Wakeup(&ctx.myTasks[i]);
-		ctx.WaitAllExecuted();
+		ctx.WaitAllExecuted(testName);
 
 		double duration = timer.GetMilliSeconds();
 		Report("Duration: %lf ms", duration);
 
-		ctx.WaitAllStopped();
+		ctx.WaitAllStopped(testName);
 		UnitTestTaskSchedulerPrintStat(&sched);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
@@ -1040,14 +1065,14 @@ namespace unittests {
 		uint32_t aExecuteCount)
 	{
 		TestCaseGuard guard("Signal stress");
-
+		const char* testName = "TaskSchedulerSignalStress";
 		// Ensure the tasks never stuck when signals are used.
 		Report("Signal stress test: %u threads, %u tasks, %u executes", aThreadCount,
 			aTaskCount, aExecuteCount);
 		mg::serverbox::TaskScheduler sched("tst", aThreadCount, 5000);
 		UTTSchedulerTaskCtx ctx(aTaskCount, aExecuteCount, &sched);
 
-		ctx.CreateSignaled();
+		ctx.CreateSignaled(testName);
 		ctx.PostAll();
 		for (uint32_t i = 0; i < aExecuteCount; ++i)
 		{
@@ -1056,9 +1081,10 @@ namespace unittests {
 			uint64_t total = aTaskCount * (i + 1);
 			ctx.WaitExecuteCount(total);
 		}
-		ctx.WaitAllStopped();
+		ctx.WaitAllStopped(testName);
 
 		UnitTestTaskSchedulerPrintStat(&sched);
+		Report("(Passed)%s]]", testName);
 	}
 
 	void

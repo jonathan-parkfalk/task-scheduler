@@ -40,6 +40,7 @@ namespace unittests {
 		mg::common::Mutex mutex;
 		mg::common::AtomicU32 stepCounter(0);
 		uint32_t next = 0;
+		const char* testName = "ConditionVariableBasic";
 		mg::common::ThreadFunc worker([&]() {
 			uint32_t workerNext = 1;
 
@@ -49,7 +50,7 @@ namespace unittests {
 			mutex.Lock();
 			UnitTestCondVarSend(stepCounter, workerNext);
 			var.Wait(mutex);
-			MG_COMMON_ASSERT(mutex.IsOwnedByThisThread());
+			MG_COMMON_ASSERT_F(mutex.IsOwnedByThisThread(), "(Failed)%s]]", testName);
 			mutex.Unlock();
 			mutex.Lock();
 			UnitTestCondVarSend(stepCounter, workerNext);
@@ -60,8 +61,8 @@ namespace unittests {
 
 			bool isTimedOut = false;
 			var.TimedWait(mutex, 100, &isTimedOut);
-			MG_COMMON_ASSERT(isTimedOut);
-			MG_COMMON_ASSERT(mutex.IsOwnedByThisThread());
+			MG_COMMON_ASSERT_F(isTimedOut, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(mutex.IsOwnedByThisThread(), "(Failed)%s]]", testName);
 			UnitTestCondVarSend(stepCounter, workerNext);
 
 			// Test that timed wait does not set the flag if
@@ -71,15 +72,15 @@ namespace unittests {
 			UnitTestCondVarSend(stepCounter, workerNext);
 			// Wait signal.
 			var.TimedWait(mutex, UNIT_TEST_CONDVAR_TIMEOUT, &isTimedOut);
-			MG_COMMON_ASSERT(!isTimedOut);
-			MG_COMMON_ASSERT(mutex.IsOwnedByThisThread());
+			MG_COMMON_ASSERT_F(!isTimedOut, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(mutex.IsOwnedByThisThread(), "(Failed)%s]]", testName);
 
 			UnitTestCondVarReceive(stepCounter, workerNext);
 			UnitTestCondVarSend(stepCounter, workerNext);
 			// Wait broadcast.
 			var.TimedWait(mutex, UNIT_TEST_CONDVAR_TIMEOUT, &isTimedOut);
-			MG_COMMON_ASSERT(!isTimedOut);
-			MG_COMMON_ASSERT(mutex.IsOwnedByThisThread());
+			MG_COMMON_ASSERT_F(!isTimedOut, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(mutex.IsOwnedByThisThread(), "(Failed)%s]]", testName);
 
 			mutex.Unlock();
 		});
@@ -113,6 +114,8 @@ namespace unittests {
 		mutex.Unlock();
 
 		worker.BlockingStop();
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	void

@@ -12,31 +12,34 @@ namespace unittests {
 	static void
 	UnitTestSignalBasic()
 	{
+		const char* testName = "SignalBasic";
 		mg::common::Signal s;
-		MG_COMMON_ASSERT(!s.Receive());
+		MG_COMMON_ASSERT_F(!s.Receive(), "(Failed)%s]]", testName);
 
 		s.Send();
-		MG_COMMON_ASSERT(s.Receive());
-		MG_COMMON_ASSERT(!s.Receive());
+		MG_COMMON_ASSERT_F(s.Receive(), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!s.Receive(), "(Failed)%s]]", testName);
 
 		s.Send();
 		s.ReceiveBlocking();
-		MG_COMMON_ASSERT(!s.Receive());
+		MG_COMMON_ASSERT_F(!s.Receive(), "(Failed)%s]]", testName);
 
 		s.Send();
-		MG_COMMON_ASSERT(s.ReceiveTimed(1000000));
-		MG_COMMON_ASSERT(!s.Receive());
+		MG_COMMON_ASSERT_F(s.ReceiveTimed(1000000), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!s.Receive(), "(Failed)%s]]", testName);
 
 		s.Send();
-		MG_COMMON_ASSERT(s.ReceiveTimed(0));
-		MG_COMMON_ASSERT(!s.Receive());
+		MG_COMMON_ASSERT_F(s.ReceiveTimed(0), "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(!s.Receive(), "(Failed)%s]]", testName);
 
-		MG_COMMON_ASSERT(!s.ReceiveTimed(1));
+		MG_COMMON_ASSERT_F(!s.ReceiveTimed(1), "(Failed)%s]]", testName);
+		Report("(Passed)%s]]", testName);
 	}
 
 	static void
 	UnitTestSignalStressSendAndReceive()
 	{
+		const char* testName = "SignalStressSendAndReceive";
 		// The test checks that right after Receive() returns
 		// success, it is safe to do with the signal anything.
 		// Including deletion. Even if Send() in another thread is
@@ -66,6 +69,7 @@ namespace unittests {
 			delete signals[i];
 		}
 		worker.BlockingStop();
+		Report("(Passed)%s]]", testName);
 	}
 
 	void

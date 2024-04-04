@@ -34,15 +34,16 @@ namespace unittests {
 	static void
 	UnitTestForwardListBasic()
 	{
+		const char* testName = "ForwardListBasic";
 		// Empty list.
 		{
 			UTFLList list;
 			const UTFLList* clist = &list;
-			MG_COMMON_ASSERT(list.GetFirst() == nullptr);
-			MG_COMMON_ASSERT(clist->GetFirst() == nullptr);
-			MG_COMMON_ASSERT(list.GetLast() == nullptr);
-			MG_COMMON_ASSERT(clist->GetLast() == nullptr);
-			MG_COMMON_ASSERT(list.IsEmpty());
+			MG_COMMON_ASSERT_F(list.GetFirst() == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(clist->GetFirst() == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(clist->GetLast() == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.IsEmpty(), "(Failed)%s]]", testName);
 			list.Clear();
 			list.Reverse();
 		}
@@ -53,23 +54,23 @@ namespace unittests {
 			UTFLValue v(1);
 
 			list.Append(&v);
-			MG_COMMON_ASSERT(v.myNext == nullptr);
-			MG_COMMON_ASSERT(list.GetFirst() == &v);
-			MG_COMMON_ASSERT(clist->GetFirst() == &v);
-			MG_COMMON_ASSERT(list.GetLast() == &v);
-			MG_COMMON_ASSERT(clist->GetLast() == &v);
-			MG_COMMON_ASSERT(!list.IsEmpty());
+			MG_COMMON_ASSERT_F(v.myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(clist->GetFirst() == &v, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(clist->GetLast() == &v, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!list.IsEmpty(), "(Failed)%s]]", testName);
 
 			list.Reverse();
-			MG_COMMON_ASSERT(list.GetFirst() == &v);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v, "(Failed)%s]]", testName);
 
 			list.Clear();
-			MG_COMMON_ASSERT(list.IsEmpty());
-			MG_COMMON_ASSERT(list.GetFirst() == nullptr);
+			MG_COMMON_ASSERT_F(list.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetFirst() == nullptr, "(Failed)%s]]", testName);
 
 			list.Prepend(&v);
-			MG_COMMON_ASSERT(list.GetFirst() == &v);
-			MG_COMMON_ASSERT(list.PopFirst() == &v);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.PopFirst() == &v, "(Failed)%s]]", testName);
 		}
 		// Many elements.
 		{
@@ -82,53 +83,53 @@ namespace unittests {
 			v2.myNext = v1.myNext;
 
 			list.Append(&v1);
-			MG_COMMON_ASSERT(v1.myNext == nullptr);
+			MG_COMMON_ASSERT_F(v1.myNext == nullptr, "(Failed)%s]]", testName);
 			list.Append(&v2);
 
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(clist->GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v2);
-			MG_COMMON_ASSERT(clist->GetLast() == &v2);
-			MG_COMMON_ASSERT(!list.IsEmpty());
-			MG_COMMON_ASSERT(v1.myNext == &v2);
-			MG_COMMON_ASSERT(v2.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(clist->GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(clist->GetLast() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!list.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == nullptr, "(Failed)%s]]", testName);
 
 			UTFLValue v0(0);
 			list.Prepend(&v0);
-			MG_COMMON_ASSERT(list.GetFirst() == &v0);
-			MG_COMMON_ASSERT(list.GetLast() == &v2);
-			MG_COMMON_ASSERT(v0.myNext == &v1);
-			MG_COMMON_ASSERT(v1.myNext == &v2);
-			MG_COMMON_ASSERT(v2.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v0.myNext == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == nullptr, "(Failed)%s]]", testName);
 
 			list.Reverse();
-			MG_COMMON_ASSERT(list.GetFirst() == &v2);
-			MG_COMMON_ASSERT(list.GetLast() == &v0);
-			MG_COMMON_ASSERT(v2.myNext == &v1);
-			MG_COMMON_ASSERT(v1.myNext == &v0);
-			MG_COMMON_ASSERT(v0.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v0, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v0.myNext == nullptr, "(Failed)%s]]", testName);
 
 			list.Clear();
-			MG_COMMON_ASSERT(list.IsEmpty());
+			MG_COMMON_ASSERT_F(list.IsEmpty(), "(Failed)%s]]", testName);
 		}
 		// Construct from a plain empty list.
 		{
 			UTFLList list(nullptr, nullptr);
 			UTFLValue v1(1);
-			MG_COMMON_ASSERT(list.IsEmpty());
+			MG_COMMON_ASSERT_F(list.IsEmpty(), "(Failed)%s]]", testName);
 			list.Append(&v1);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v1);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v1, "(Failed)%s]]", testName);
 		}
 		// Construct from a plain one-element list.
 		{
 			UTFLValue v1(1);
 			v1.myNext = &v1;
 			UTFLList list(&v1, &v1);
-			MG_COMMON_ASSERT(v1.myNext == nullptr);
-			MG_COMMON_ASSERT(!list.IsEmpty());
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v1);
+			MG_COMMON_ASSERT_F(v1.myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!list.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v1, "(Failed)%s]]", testName);
 		}
 		// Construct from a plain two-element list.
 		{
@@ -136,11 +137,11 @@ namespace unittests {
 			UTFLValue v2(2);
 			v1.myNext = &v2;
 			UTFLList list(&v1, &v2);
-			MG_COMMON_ASSERT(v1.myNext == &v2);
-			MG_COMMON_ASSERT(v2.myNext == nullptr);
-			MG_COMMON_ASSERT(!list.IsEmpty());
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v2);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!list.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v2, "(Failed)%s]]", testName);
 		}
 		// Construct from a list object.
 		{
@@ -150,12 +151,12 @@ namespace unittests {
 			UTFLList list1(&v1, &v2);
 			UTFLList list2(std::move(list1));
 
-			MG_COMMON_ASSERT(list1.IsEmpty());
-			MG_COMMON_ASSERT(v1.myNext == &v2);
-			MG_COMMON_ASSERT(v2.myNext == nullptr);
-			MG_COMMON_ASSERT(!list2.IsEmpty());
-			MG_COMMON_ASSERT(list2.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list2.GetLast() == &v2);
+			MG_COMMON_ASSERT_F(list1.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(!list2.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.GetLast() == &v2, "(Failed)%s]]", testName);
 		}
 		// Pop with tail.
 		{
@@ -168,17 +169,20 @@ namespace unittests {
 			list.Append(&v3);
 			UTFLValue* tail = &v1;
 			UTFLValue* head = list.PopAll(tail);
-			MG_COMMON_ASSERT(list.IsEmpty());
-			MG_COMMON_ASSERT(tail == &v3);
-			MG_COMMON_ASSERT(head == &v1);
-			MG_COMMON_ASSERT(list.GetFirst() == nullptr);
-			MG_COMMON_ASSERT(list.GetLast() == nullptr);
+			MG_COMMON_ASSERT_F(list.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(tail == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(head == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetFirst() == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == nullptr, "(Failed)%s]]", testName);
 		}
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestForwardListAppend()
 	{
+		const char* testName = "ForwardListAppend";
 		// Append plain list.
 		{
 			UTFLList list;
@@ -187,15 +191,15 @@ namespace unittests {
 			v1.myNext = &v2;
 
 			list.Append(&v1, &v2);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v2);
-			MG_COMMON_ASSERT(v1.myNext == &v2);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
 
 			list.Clear();
 			list.Append(&v1, &v1);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v1);
-			MG_COMMON_ASSERT(v1.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == nullptr, "(Failed)%s]]", testName);
 
 			list.Clear();
 			UTFLValue v3(3);
@@ -203,11 +207,11 @@ namespace unittests {
 			v1.myNext = &v2;
 			list.Append(&v1, &v2);
 			list.Append(&v3, &v3);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v3);
-			MG_COMMON_ASSERT(v1.myNext == &v2);
-			MG_COMMON_ASSERT(v2.myNext == &v3);
-			MG_COMMON_ASSERT(v3.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v3.myNext == nullptr, "(Failed)%s]]", testName);
 
 			list.Clear();
 			UTFLValue v4(4);
@@ -217,16 +221,16 @@ namespace unittests {
 			v4.myNext = &v1;
 			list.Append(&v1, &v2);
 			list.Append(&v3, &v4);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v4);
-			MG_COMMON_ASSERT(v1.myNext == &v2);
-			MG_COMMON_ASSERT(v2.myNext == &v3);
-			MG_COMMON_ASSERT(v3.myNext == &v4);
-			MG_COMMON_ASSERT(v4.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v4, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v3.myNext == &v4, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v4.myNext == nullptr, "(Failed)%s]]", testName);
 
 			list.Append(nullptr, nullptr);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v4);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v4, "(Failed)%s]]", testName);
 		}
 		// Append a list object.
 		{
@@ -235,29 +239,32 @@ namespace unittests {
 			UTFLValue v1(1);
 
 			list1.Append(std::move(list2));
-			MG_COMMON_ASSERT(list1.IsEmpty());
-			MG_COMMON_ASSERT(list2.IsEmpty());
+			MG_COMMON_ASSERT_F(list1.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
 
 			list2.Append(&v1);
 			list1.Append(std::move(list2));
-			MG_COMMON_ASSERT(list1.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list1.GetLast() == &v1);
-			MG_COMMON_ASSERT(list2.IsEmpty());
+			MG_COMMON_ASSERT_F(list1.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetLast() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
 
 			UTFLValue v2(2);
 			UTFLValue v3(2);
 			list2.Append(&v2);
 			list2.Append(&v3);
 			list1.Append(std::move(list2));
-			MG_COMMON_ASSERT(list1.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list1.GetLast() == &v3);
-			MG_COMMON_ASSERT(list2.IsEmpty());
+			MG_COMMON_ASSERT_F(list1.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetLast() == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
 		}
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestForwardListPrepend()
 	{
+		const char* testName = "ForwardListPrepend";
 		// Prepend multiple.
 		{
 			UTFLList list;
@@ -266,10 +273,10 @@ namespace unittests {
 
 			list.Prepend(&v2);
 			list.Prepend(&v1);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v2);
-			MG_COMMON_ASSERT(v1.myNext == &v2);
-			MG_COMMON_ASSERT(v2.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == nullptr, "(Failed)%s]]", testName);
 		}
 		// Prepend a plain list.
 		{
@@ -278,25 +285,25 @@ namespace unittests {
 			UTFLValue v2(2);
 
 			list.Prepend(nullptr, nullptr);
-			MG_COMMON_ASSERT(list.IsEmpty());
+			MG_COMMON_ASSERT_F(list.IsEmpty(), "(Failed)%s]]", testName);
 			list.Append(&v1);
-			MG_COMMON_ASSERT(list.PopFirst() == &v1);
+			MG_COMMON_ASSERT_F(list.PopFirst() == &v1, "(Failed)%s]]", testName);
 
 			v1.myNext = &v1;
 			list.Prepend(&v1, &v1);
-			MG_COMMON_ASSERT(!list.IsEmpty());
-			MG_COMMON_ASSERT(v1.myNext == nullptr);
-			MG_COMMON_ASSERT(list.PopFirst() == &v1);
-			MG_COMMON_ASSERT(list.IsEmpty());
+			MG_COMMON_ASSERT_F(!list.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.PopFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.IsEmpty(), "(Failed)%s]]", testName);
 
 			v1.myNext = &v2;
 			list.Prepend(&v1, &v2);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v2);
-			MG_COMMON_ASSERT(list.PopFirst() == &v1);
-			MG_COMMON_ASSERT(list.PopFirst() == &v2);
-			MG_COMMON_ASSERT(list.GetFirst() == nullptr);
-			MG_COMMON_ASSERT(list.GetLast() == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.PopFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.PopFirst() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetFirst() == nullptr, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == nullptr, "(Failed)%s]]", testName);
 		}
 		// Prepend a list object.
 		{
@@ -304,42 +311,45 @@ namespace unittests {
 			UTFLList list2;
 
 			list1.Prepend(std::move(list2));
-			MG_COMMON_ASSERT(list1.IsEmpty());
-			MG_COMMON_ASSERT(list2.IsEmpty());
+			MG_COMMON_ASSERT_F(list1.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
 
 			UTFLValue v1(1);
 			list2.Append(&v1);
 			list1.Prepend(std::move(list2));
-			MG_COMMON_ASSERT(list1.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list1.GetLast() == &v1);
-			MG_COMMON_ASSERT(list2.IsEmpty());
+			MG_COMMON_ASSERT_F(list1.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetLast() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
 
 			UTFLValue v2(2);
 			UTFLValue v3(3);
 			list2.Append(&v2);
 			list2.Append(&v3);
 			list1.Prepend(std::move(list2));
-			MG_COMMON_ASSERT(list2.IsEmpty());
-			MG_COMMON_ASSERT(list1.GetFirst() == &v2);
-			MG_COMMON_ASSERT(list1.GetLast() == &v1);
-			MG_COMMON_ASSERT(v2.myNext == &v3);
-			MG_COMMON_ASSERT(v3.myNext == &v1);
-			MG_COMMON_ASSERT(v1.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetFirst() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetLast() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v3.myNext == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == nullptr, "(Failed)%s]]", testName);
 		}
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestForwardListInsert()
 	{
+		const char* testName = "ForwardListInsert";
 		// Insert into empty.
 		{
 			UTFLList list;
 			UTFLValue v1(1);
 
 			list.Insert(nullptr, &v1);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v1);
-			MG_COMMON_ASSERT(v1.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == nullptr, "(Failed)%s]]", testName);
 		}
 		// Insert before first.
 		{
@@ -348,9 +358,9 @@ namespace unittests {
 			UTFLValue v2(2);
 			list.Insert(nullptr, &v2);
 			list.Insert(nullptr, &v1);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v2);
-			MG_COMMON_ASSERT(v2.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == nullptr, "(Failed)%s]]", testName);
 		}
 		// Insert in the middle first.
 		{
@@ -361,11 +371,11 @@ namespace unittests {
 			list.Append(&v1);
 			list.Append(&v3);
 			list.Insert(&v1, &v2);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v3);
-			MG_COMMON_ASSERT(v1.myNext == &v2);
-			MG_COMMON_ASSERT(v2.myNext == &v3);
-			MG_COMMON_ASSERT(v3.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v3.myNext == nullptr, "(Failed)%s]]", testName);
 		}
 		// Insert in the end.
 		{
@@ -376,17 +386,20 @@ namespace unittests {
 			list.Append(&v1);
 			list.Append(&v2);
 			list.Insert(&v2, &v3);
-			MG_COMMON_ASSERT(list.GetFirst() == &v1);
-			MG_COMMON_ASSERT(list.GetLast() == &v3);
-			MG_COMMON_ASSERT(v1.myNext == &v2);
-			MG_COMMON_ASSERT(v2.myNext == &v3);
-			MG_COMMON_ASSERT(v3.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list.GetFirst() == &v1, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list.GetLast() == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v1.myNext == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v3.myNext == nullptr, "(Failed)%s]]", testName);
 		}
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestForwardListAssign()
 	{
+		const char* testName = "ForwardListAssign";
 		// Assign from a list object.
 		{
 			UTFLList list1;
@@ -394,21 +407,21 @@ namespace unittests {
 			UTFLValue v1(1);
 
 			list1 = std::move(list2);
-			MG_COMMON_ASSERT(list1.IsEmpty());
-			MG_COMMON_ASSERT(list2.IsEmpty());
+			MG_COMMON_ASSERT_F(list1.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
 
 			list1.Append(&v1);
 			list1 = std::move(list2);
-			MG_COMMON_ASSERT(list1.IsEmpty());
-			MG_COMMON_ASSERT(list2.IsEmpty());
+			MG_COMMON_ASSERT_F(list1.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
 
 			UTFLValue v2(2);
 			list1.Append(&v1);
 			list2.Append(&v2);
 			list1 = std::move(list2);
-			MG_COMMON_ASSERT(list1.GetFirst() == &v2);
-			MG_COMMON_ASSERT(list1.GetLast() == &v2);
-			MG_COMMON_ASSERT(list2.IsEmpty());
+			MG_COMMON_ASSERT_F(list1.GetFirst() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetLast() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
 
 			UTFLValue v3(3);
 			list1.Clear();
@@ -416,22 +429,24 @@ namespace unittests {
 			list2.Append(&v2);
 			list2.Append(&v3);
 			list1 = std::move(list2);
-			MG_COMMON_ASSERT(list2.IsEmpty());
-			MG_COMMON_ASSERT(list1.GetFirst() == &v2);
-			MG_COMMON_ASSERT(list1.GetLast() == &v3);
-			MG_COMMON_ASSERT(v2.myNext == &v3);
-			MG_COMMON_ASSERT(v3.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetFirst() == &v2, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetLast() == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v2.myNext == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v3.myNext == nullptr, "(Failed)%s]]", testName);
 
 			list1.Clear();
 			list1.Append(&v1);
 			list1.Append(&v2);
 			list2.Append(&v3);
 			list1 = std::move(list2);
-			MG_COMMON_ASSERT(list2.IsEmpty());
-			MG_COMMON_ASSERT(list1.GetFirst() == &v3);
-			MG_COMMON_ASSERT(list1.GetLast() == &v3);
-			MG_COMMON_ASSERT(v3.myNext == nullptr);
+			MG_COMMON_ASSERT_F(list2.IsEmpty(), "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetFirst() == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(list1.GetLast() == &v3, "(Failed)%s]]", testName);
+			MG_COMMON_ASSERT_F(v3.myNext == nullptr, "(Failed)%s]]", testName);
 		}
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	struct UTFLValue2
@@ -458,25 +473,29 @@ namespace unittests {
 	static void
 	UnitTestForwardListDifferentLink()
 	{
+		const char* testName = "ForwardListDifferentLink";
 		UTFLList2 list2;
 		UTFLValue2 v1(1);
 		UTFLValue2 v2(2);
 		list2.Append(&v1);
 		list2.Append(&v2);
-		MG_COMMON_ASSERT(list2.GetFirst() == &v1);
-		MG_COMMON_ASSERT(list2.GetLast() == &v2);
-		MG_COMMON_ASSERT(v1.myNext2 == &v2);
-		MG_COMMON_ASSERT(v2.myNext2 == nullptr);
+		MG_COMMON_ASSERT_F(list2.GetFirst() == &v1, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(list2.GetLast() == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v1.myNext2 == &v2, "(Failed)%s]]", testName);
+		MG_COMMON_ASSERT_F(v2.myNext2 == nullptr, "(Failed)%s]]", testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestForwardListIterator()
 	{
+		const char* testName = "ForwardListIterator";
 		UTFLList list;
 		for (UTFLValue* val : list)
 		{
 			MG_UNUSED(val);
-			MG_COMMON_ASSERT(false);
+			MG_COMMON_ASSERT_F(false, "(Failed)%s]]", testName);
 		}
 
 		UTFLValue v1(1);
@@ -485,18 +504,18 @@ namespace unittests {
 		for (UTFLValue* val : list)
 		{
 			++count;
-			MG_COMMON_ASSERT(val->myValue == count);
+			MG_COMMON_ASSERT_F(val->myValue == count, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(count == 1);
+		MG_COMMON_ASSERT_F(count == 1, "(Failed)%s]]", testName);
 
 		count = 0;
 		for (UTFLValue* val : list)
 		{
-			MG_COMMON_ASSERT(val == list.PopFirst());
+			MG_COMMON_ASSERT_F(val == list.PopFirst(), "(Failed)%s]]", testName);
 			++count;
-			MG_COMMON_ASSERT(val->myValue == count);
+			MG_COMMON_ASSERT_F(val->myValue == count, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(count == 1);
+		MG_COMMON_ASSERT_F(count == 1, "(Failed)%s]]", testName);
 
 		UTFLValue v2(2);
 		list.Append(&v1);
@@ -505,18 +524,18 @@ namespace unittests {
 		for (UTFLValue* val : list)
 		{
 			++count;
-			MG_COMMON_ASSERT(val->myValue == count);
+			MG_COMMON_ASSERT_F(val->myValue == count, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(count == 2);
+		MG_COMMON_ASSERT_F(count == 2, "(Failed)%s]]", testName);
 
 		count = 0;
 		for (UTFLValue* val : list)
 		{
-			MG_COMMON_ASSERT(val == list.PopFirst());
+			MG_COMMON_ASSERT_F(val == list.PopFirst(), "(Failed)%s]]", testName);
 			++count;
-			MG_COMMON_ASSERT(val->myValue == count);
+			MG_COMMON_ASSERT_F(val->myValue == count, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(count == 2);
+		MG_COMMON_ASSERT_F(count == 2, "(Failed)%s]]", testName);
 
 		UTFLValue v3(3);
 		list.Append(&v1);
@@ -526,29 +545,32 @@ namespace unittests {
 		for (UTFLValue* val : list)
 		{
 			++count;
-			MG_COMMON_ASSERT(val->myValue == count);
+			MG_COMMON_ASSERT_F(val->myValue == count, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(count == 3);
+		MG_COMMON_ASSERT_F(count == 3, "(Failed)%s]]", testName);
 
 		count = 0;
 		for (UTFLValue* val : list)
 		{
-			MG_COMMON_ASSERT(val == list.PopFirst());
+			MG_COMMON_ASSERT_F(val == list.PopFirst(), "(Failed)%s]]", testName);
 			++count;
-			MG_COMMON_ASSERT(val->myValue == count);
+			MG_COMMON_ASSERT_F(val->myValue == count, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(count == 3);
+		MG_COMMON_ASSERT_F(count == 3, "(Failed)%s]]", testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	static void
 	UnitTestForwardListConstIterator()
 	{
+		const char* testName = "ForwardListConstIterator";
 		UTFLList list;
 		const UTFLList& clist = list;
 		for (const UTFLValue* val : clist)
 		{
 			MG_UNUSED(val);
-			MG_COMMON_ASSERT(false);
+			MG_COMMON_ASSERT_F(false, "(Failed)%s]]", testName);
 		}
 
 		UTFLValue v1(1);
@@ -557,9 +579,9 @@ namespace unittests {
 		for (const UTFLValue* val : clist)
 		{
 			++count;
-			MG_COMMON_ASSERT(val->myValue == count);
+			MG_COMMON_ASSERT_F(val->myValue == count, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(count == 1);
+		MG_COMMON_ASSERT_F(count == 1, "(Failed)%s]]", testName);
 
 		UTFLValue v2(2);
 		list.Append(&v1);
@@ -568,9 +590,9 @@ namespace unittests {
 		for (const UTFLValue* val : clist)
 		{
 			++count;
-			MG_COMMON_ASSERT(val->myValue == count);
+			MG_COMMON_ASSERT_F(val->myValue == count, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(count == 2);
+		MG_COMMON_ASSERT_F(count == 2, "(Failed)%s]]", testName);
 
 		UTFLValue v3(3);
 		list.Append(&v1);
@@ -580,9 +602,11 @@ namespace unittests {
 		for (const UTFLValue* val : clist)
 		{
 			++count;
-			MG_COMMON_ASSERT(val->myValue == count);
+			MG_COMMON_ASSERT_F(val->myValue == count, "(Failed)%s]]", testName);
 		}
-		MG_COMMON_ASSERT(count == 3);
+		MG_COMMON_ASSERT_F(count == 3, "(Failed)%s]]", testName);
+				Report("(Passed)%s]]", testName);
+
 	}
 
 	void
